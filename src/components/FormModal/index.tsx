@@ -69,7 +69,7 @@ const FormModal = memo<FormModalProps>(
             {/* Resources */}
             <FormInput
               label="Resources"
-              isInvalid={!!errors.resource}
+              isInvalid={!!errors.resources}
               inputName="resources"
               register={register}
               type="string"
@@ -78,7 +78,7 @@ const FormModal = memo<FormModalProps>(
             <FormLabel fontSize="16px">Project timeline</FormLabel>
             <FormInput
               label="From"
-              isInvalid={!!errors.createAt}
+              isInvalid={!!errors.createdAt}
               inputName="resources"
               register={register}
               type="string"
