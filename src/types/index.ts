@@ -4,18 +4,23 @@ export type SelectType = {
 };
 
 export type Project = {
-  id: number;
+  id?: number;
   projectName: string;
-  projectManager: string;
+  projectManager?: string;
   avatar: string;
   status: string;
   latestUpdate: string;
-  resource: string;
-  createAt: string;
-  finishAt: string;
+  resources: string;
+  createdAt?: string;
+  finishAt?: string;
   estimation: string;
 };
 
 export type HeaderList = {
   title: string;
+};
+
+export type DropdownItemType = {
+  name: string;
+  action?: () => void;
 };
