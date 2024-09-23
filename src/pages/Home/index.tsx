@@ -5,6 +5,7 @@ import { Box } from "@chakra-ui/react";
 import { OPTION_SORT } from "@/constants";
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
+import FormModal from "@/components/FormModal";
 
 const Home = () => {
   return (
@@ -14,11 +15,17 @@ const Home = () => {
         <Select options={OPTION_SORT} />
         <Input onKeyDown={() => {}} />
         <Modal
-          modalTitle="Add new"
-          isOpen={true}
+          modalTitle="Add new Project"
+          // isOpen={true}
           buttonAction="Update"
           ButtonClose="Cancel"
           onClose={() => {}}
+        />
+        <FormModal
+          modalTitle={"Add new Project"}
+          buttonLabel={"Update"}
+          onClose={() => {}}
+          onConfirm={() => {}}
         />
       </Box>
     </>

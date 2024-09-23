@@ -12,17 +12,12 @@ import { SearchIcon } from "@chakra-ui/icons";
 interface SearchInputProps {
   placeholder?: string;
   onChange?: () => void;
-  onKeyDown: () => void;
+  onKeyDown?: () => void;
   value?: string;
 }
 
 const Input = memo<SearchInputProps>(
-  ({
-    placeholder = "Search",
-    onChange,
-    onKeyDown,
-    value,
-  }: SearchInputProps) => {
+  ({ placeholder, onChange, onKeyDown, value }: SearchInputProps) => {
     return (
       <InputGroup maxW={{ xs: "100%", lg: "300px" }}>
         <SelectChakra
