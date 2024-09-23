@@ -15,3 +15,7 @@ export type Project = {
   finishAt: string;
   estimation: string;
 };
+
+export type HeaderList = {
+  title: string;
+};
