@@ -5,7 +5,8 @@ import { Box } from "@chakra-ui/react";
 import { OPTION_SORT } from "@/constants";
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
-import FormModal from "@/components/FormModal";
+// import FormModal from "@/components/FormModal";
+import Pagination from "@/components/pagination";
 
 const Home = () => {
   return (
@@ -21,11 +22,16 @@ const Home = () => {
           ButtonClose="Cancel"
           onClose={() => {}}
         />
-        <FormModal
+        {/* <FormModal
           modalTitle={"Add new Project"}
           buttonLabel={"Update"}
           onClose={() => {}}
           onConfirm={() => {}}
+        /> */}
+        <Pagination
+          projects={[]}
+          onClickPrevious={() => {}}
+          onClickNext={() => {}}
         />
       </Box>
     </>
