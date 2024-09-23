@@ -5,7 +5,8 @@ export const Input = {
       borderRadius: "6px",
       h: "32px",
       px: "10px",
-      boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+      boxShadow:
+        "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px",
       // _placeholder: {
       //   color: "inactive.primary",
       // },
