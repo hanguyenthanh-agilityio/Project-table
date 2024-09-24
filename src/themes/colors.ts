@@ -18,6 +18,7 @@ const colors = {
   background: {
     default: "#fff",
     purple: "#5e5adb",
+    gray: "#f7f8fa",
   },
 
   border: {

@@ -39,18 +39,25 @@ const Modal = memo<ModalProps>(
         <ModalOverlay data-testid="modal-overlay" />
         <ModalContent data-testid="modal-content">
           {/* Header */}
-          <ModalHeader textAlign="center" data-testid="title">
+          <ModalHeader
+            textAlign="left"
+            data-testid="title"
+            borderBottom="1px solid #e0e2e4"
+          >
             {modalTitle}
           </ModalHeader>
           <ModalCloseButton data-testid="modal-close-button" />
           {/* Body */}
-          <ModalBody textAlign="center">{children}</ModalBody>
+          <ModalBody textAlign="center" bg="background.gray">
+            {children}
+          </ModalBody>
           {/* Footer */}
           <ModalFooter
             padding="20px 0"
             display="flex"
             justifyContent="right"
             gap="20px"
+            borderTop="1px solid #e0e2e4"
           >
             <Button
               variant="default"
