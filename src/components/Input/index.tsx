@@ -3,7 +3,7 @@ import { memo } from "react";
 // Chakra UI
 import {
   Icon,
-  Input as SelectChakra,
+  Input as InputChakra,
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
@@ -20,7 +20,7 @@ const Input = memo<SearchInputProps>(
   ({ placeholder, onChange, onKeyDown, value }: SearchInputProps) => {
     return (
       <InputGroup maxW={{ xs: "100%", lg: "300px" }}>
-        <SelectChakra
+        <InputChakra
           id="myInput"
           size={{ xs: "secondary", lg: "default" }}
           fontSize={{ xs: "12px", md: "17px" }}
@@ -36,6 +36,7 @@ const Input = memo<SearchInputProps>(
           right={{ xs: "10px", md: "16px" }}
           bottom="0px"
           top="0px"
+          height="auto"
           children={
             <Icon
               as={SearchIcon}

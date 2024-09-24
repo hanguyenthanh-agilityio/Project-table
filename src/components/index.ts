@@ -11,3 +11,5 @@ export { default as TableBody } from "./Table/TableBody";
 export { default as TableRow } from "./Table/TableBody/TableRow";
 export { default as Pagination } from "./Pagination";
 export { default as Dropdown } from "./Dropdown";
+export { default as Header } from "./Header";
+export { default as FilterBar } from "./FilterBar";
