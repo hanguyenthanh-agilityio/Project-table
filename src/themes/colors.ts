@@ -21,6 +21,7 @@ const colors = {
     light: "#f9fafd",
     purple: "#5e5adb",
     gray: "#f7f8fa",
+    primary: "#e9edf5",
   },
 
   border: {

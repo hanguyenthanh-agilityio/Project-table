@@ -9,7 +9,9 @@ export const Table = {
       borderTop: "1px",
       borderColor: "border.primary",
     },
-    td: {},
+    td: {
+      fontSize: "14px",
+    },
     th: {
       fontSize: "12px",
       fontWeight: "500",

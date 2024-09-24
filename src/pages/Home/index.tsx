@@ -3,6 +3,7 @@ import "./style.css";
 import { Box } from "@chakra-ui/react";
 import { HEADER_TABLE, OPTION_SORT } from "@/constants";
 import { Input, Modal, Pagination, Select, Table } from "@/components";
+import { PROJECT_LIST } from "@/mocks/table";
 
 const Home = () => {
   return (
@@ -29,7 +30,7 @@ const Home = () => {
           onClickPrevious={() => {}}
           onClickNext={() => {}}
         />
-        <Table headerList={HEADER_TABLE} />
+        <Table headerList={HEADER_TABLE} projects={PROJECT_LIST} />
       </Box>
     </>
   );
