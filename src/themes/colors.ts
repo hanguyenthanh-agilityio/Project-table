@@ -7,6 +7,22 @@ const colors = {
     40: "#70b7f4",
     30: "#edf2f7",
   },
+
+  text: {
+    default: "#464f60",
+    light: "#fff",
+    dark: "#000",
+    primary: "#5e5adb",
+  },
+
+  background: {
+    default: "#fff",
+    purple: "#5e5adb",
+  },
+
+  border: {
+    default: "#e0e2e4",
+  },
 };
 
 export default colors;
