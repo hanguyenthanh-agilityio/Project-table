@@ -8,10 +8,8 @@ const Header = ({ title }: HeaderProps) => (
   <Flex
     justifyContent="space-between"
     alignItems="center"
-    bg="background.heading"
-    border="1px"
-    borderColor="border.primary"
     p="12px 20px"
+    width="full"
   >
     <Heading size="large">{title}</Heading>
     <Flex gap="5" alignItems="center">
