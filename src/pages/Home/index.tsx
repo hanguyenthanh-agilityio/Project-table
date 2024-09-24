@@ -1,12 +1,9 @@
 // Styles
-import Select from "@/components/Select";
 import "./style.css";
 import { Box } from "@chakra-ui/react";
-import { OPTION_SORT } from "@/constants";
-import Input from "@/components/Input";
-import Modal from "@/components/Modal";
-// import FormModal from "@/components/FormModal";
-import Pagination from "@/components/pagination";
+import { HEADER_TABLE, OPTION_SORT } from "@/constants";
+import { Input, Modal, Pagination, Select, Table } from "@/components";
+import { PROJECT_LIST } from "@/mocks/table";
 
 const Home = () => {
   return (
@@ -33,6 +30,7 @@ const Home = () => {
           onClickPrevious={() => {}}
           onClickNext={() => {}}
         />
+        <Table headerList={HEADER_TABLE} projects={PROJECT_LIST} />
       </Box>
     </>
   );

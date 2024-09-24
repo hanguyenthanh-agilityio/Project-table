@@ -13,16 +13,20 @@ const colors = {
     light: "#fff",
     dark: "#000",
     primary: "#5e5adb",
+    secondary: "#687182",
   },
 
   background: {
     default: "#fff",
+    light: "#f9fafd",
     purple: "#5e5adb",
     gray: "#f7f8fa",
+    primary: "#e9edf5",
   },
 
   border: {
     default: "#e0e2e4",
+    primary: "#e9edf5",
   },
 };
 

@@ -1,10 +1,7 @@
 import { render } from "@testing-library/react";
 
-// Data
-
-import Pagination from ".";
-
 // Components
+import Pagination from ".";
 
 describe("Pagination component", () => {
   const props = {
