@@ -10,7 +10,7 @@ export type Project = {
   avatar: string;
   status: string;
   latestUpdate: string;
-  resources: string;
+  resources: number;
   createdAt?: string;
   finishAt?: string;
   estimation: string;
