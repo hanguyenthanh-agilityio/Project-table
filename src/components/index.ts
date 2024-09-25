@@ -14,3 +14,4 @@ export { default as Dropdown } from "./Dropdown";
 export { default as Header } from "./Header";
 export { default as FilterBar } from "./FilterBar";
 export { default as Sidebar } from "./Sidebar";
+export { default as LoadingIndicator } from "./LoadingIndicator";
