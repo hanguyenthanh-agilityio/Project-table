@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { lazy, memo, Suspense } from "react";
 
 // Chakra UI
 import { Avatar, Flex, Td, useDisclosure } from "@chakra-ui/react";
@@ -7,8 +7,8 @@ import { Avatar, Flex, Td, useDisclosure } from "@chakra-ui/react";
 import { DropdownItemType, Project } from "@/types";
 
 // Components
-
-import { Dropdown, FormModal } from "@/components";
+import { Dropdown, LoadingIndicator } from "@/components";
+const FormModal = lazy(() => import("@/components/FormModal"));
 
 interface TableRowPops {
   project: Project;
@@ -86,14 +86,16 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
       <Td>
         <Dropdown dropdownItems={actionMenu} />
       </Td>
-      {isOpenEdit && (
-        <FormModal
-          modalTitle="Edit project"
-          buttonLabel="Confirm"
-          onClose={onCloseEdit}
-          onConfirm={() => {}}
-        />
-      )}
+      <Suspense fallback={<LoadingIndicator />}>
+        {isOpenEdit && (
+          <FormModal
+            modalTitle="Edit project"
+            buttonLabel="Confirm"
+            onClose={onCloseEdit}
+            onConfirm={() => {}}
+          />
+        )}
+      </Suspense>
     </>
   );
 });

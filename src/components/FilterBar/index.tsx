@@ -1,11 +1,12 @@
-import { memo } from "react";
+import { lazy, memo, Suspense } from "react";
 
 // Chakra UI
 import { Button, Flex, useDisclosure } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
 // Components
-import { Input, FormModal } from "@/components";
+import { Input, LoadingIndicator } from "@/components";
+const FormModal = lazy(() => import("@/components/FormModal"));
 
 interface FilterBarProps {
   isLoading: boolean;
@@ -28,15 +29,17 @@ const FilterBar = memo<FilterBarProps>(
         >
           New project
         </Button>
-        {isOpen && (
-          <FormModal
-            modalTitle="Add new project"
-            buttonLabel="Add project"
-            onClose={onClose}
-            onConfirm={onConfirm}
-            isLoading={isLoading}
-          />
-        )}
+        <Suspense fallback={<LoadingIndicator />}>
+          {isOpen && (
+            <FormModal
+              modalTitle="Add new project"
+              buttonLabel="Add project"
+              onClose={onClose}
+              onConfirm={onConfirm}
+              isLoading={isLoading}
+            />
+          )}
+        </Suspense>
       </Flex>
     );
   },

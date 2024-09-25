@@ -10,6 +10,15 @@ import { HEADER_TABLE } from "@/constants";
 import { PROJECT_LIST } from "@/mocks/table";
 
 const Home = () => {
+  // Handle Search project
+  const handleChangeSearch = () => {};
+
+  // Handle Confirm add new project
+  const handleConfirm = () => {};
+
+  // Handle pagination
+  const handleClickPrevious = () => {};
+  const handleCLickNext = () => {};
   return (
     <>
       <Box>
@@ -18,14 +27,14 @@ const Home = () => {
           <Flex flexDir="column">
             <FilterBar
               isLoading={false}
-              onChangeSearch={() => {}}
-              onConfirm={() => {}}
+              onChangeSearch={handleChangeSearch}
+              onConfirm={handleConfirm}
             />
             <Table headerList={HEADER_TABLE} projects={PROJECT_LIST} />
             <Pagination
               projects={PROJECT_LIST}
-              onClickPrevious={() => {}}
-              onClickNext={() => {}}
+              onClickPrevious={handleClickPrevious}
+              onClickNext={handleCLickNext}
             />
           </Flex>
         </Container>
