@@ -1,4 +1,4 @@
-// Types
+import { memo } from "react";
 
 // Components
 import { Menu, MenuButton, MenuItem, MenuList, Image } from "@chakra-ui/react";
@@ -6,7 +6,7 @@ import { Menu, MenuButton, MenuItem, MenuList, Image } from "@chakra-ui/react";
 // Images
 import more from "../../../public/more.svg";
 
-import { memo } from "react";
+// Types
 import { DropdownItemType } from "@/types";
 
 interface DropdownProps {
