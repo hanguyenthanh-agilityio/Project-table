@@ -3,7 +3,7 @@ import LoadingIndicator from ".";
 
 describe("LoadingIndicator component", () => {
   it("Should render LoadingIndicator snapshot correctly", () => {
-    const loadingIndicator = render(<LoadingIndicator />);
+    const loadingIndicator = render(<LoadingIndicator text="Loading..." />);
 
     expect(loadingIndicator).toMatchSnapshot();
   });
