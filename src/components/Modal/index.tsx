@@ -15,7 +15,7 @@ import {
 interface ModalProps {
   modalTitle: string;
   buttonAction?: string;
-  ButtonClose?: string;
+  buttonClose?: string;
   children?: React.ReactNode;
   isOpen?: boolean;
   isLoading?: boolean;
@@ -27,7 +27,7 @@ interface ModalProps {
 const Modal = memo<ModalProps>(
   ({
     modalTitle,
-    ButtonClose,
+    buttonClose,
     buttonAction,
     children,
     isOpen = false,
@@ -70,7 +70,7 @@ const Modal = memo<ModalProps>(
               onClick={onClose}
               data-testid="close-button"
             >
-              {ButtonClose}
+              {buttonClose}
             </Button>
             <Button
               mr="20px"
