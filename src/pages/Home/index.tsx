@@ -1,36 +1,43 @@
-// Styles
-import "./style.css";
-import { Box } from "@chakra-ui/react";
-import { HEADER_TABLE, OPTION_SORT } from "@/constants";
-import { Input, Modal, Pagination, Select, Table } from "@/components";
+import { Box, Container, Flex } from "@chakra-ui/react";
+
+// Components
+import { Header, Pagination, Table, FilterBar } from "@/components";
+
+// Constants
+import { HEADER_TABLE } from "@/constants";
+
+// Mocks
 import { PROJECT_LIST } from "@/mocks/table";
 
 const Home = () => {
+  // Handle Search project
+  const handleChangeSearch = () => {};
+
+  // Handle Confirm add new project
+  const handleConfirm = () => {};
+
+  // Handle pagination
+  const handleClickPrevious = () => {};
+  const handleCLickNext = () => {};
   return (
     <>
-      <Box color="brand.900" textAlign="center">
-        Home Page
-        <Select options={OPTION_SORT} />
-        <Input onKeyDown={() => {}} />
-        <Modal
-          modalTitle="Add new Project"
-          // isOpen={true}
-          buttonAction="Update"
-          ButtonClose="Cancel"
-          onClose={() => {}}
-        />
-        {/* <FormModal
-          modalTitle={"Add new Project"}
-          buttonLabel={"Update"}
-          onClose={() => {}}
-          onConfirm={() => {}}
-        /> */}
-        <Pagination
-          projects={[]}
-          onClickPrevious={() => {}}
-          onClickNext={() => {}}
-        />
-        <Table headerList={HEADER_TABLE} projects={PROJECT_LIST} />
+      <Box>
+        <Container p="0" maxW="100%">
+          <Header title="Projects" />
+          <Flex flexDir="column">
+            <FilterBar
+              isLoading={false}
+              onChangeSearch={handleChangeSearch}
+              onConfirm={handleConfirm}
+            />
+            <Table headerList={HEADER_TABLE} projects={PROJECT_LIST} />
+            <Pagination
+              projects={PROJECT_LIST}
+              onClickPrevious={handleClickPrevious}
+              onClickNext={handleCLickNext}
+            />
+          </Flex>
+        </Container>
       </Box>
     </>
   );

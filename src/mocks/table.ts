@@ -3,8 +3,7 @@ import { Project } from "@/types";
 export const PROJECT_LIST: Project[] = [
   {
     projectName: "Karla Hyatt",
-    avatar:
-      "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1139.jpg",
+    avatar: "https://loremflickr.com/640/480/people",
     status: "status 1",
     latestUpdate: "15 May 2021",
     resources: 1,
@@ -14,8 +13,7 @@ export const PROJECT_LIST: Project[] = [
   },
   {
     projectName: "Dewey Jenkins",
-    avatar:
-      "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/645.jpg",
+    avatar: "https://loremflickr.com/640/480/people",
     status: "status 2",
     latestUpdate: "15 May 2021",
     resources: 3,
@@ -25,8 +23,7 @@ export const PROJECT_LIST: Project[] = [
   },
   {
     projectName: "Salvador Kilback II",
-    avatar:
-      "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/619.jpg",
+    avatar: "https://loremflickr.com/640/480/people",
     status: "status 3",
     latestUpdate: "15 May 2021",
     resources: 3,
@@ -36,8 +33,7 @@ export const PROJECT_LIST: Project[] = [
   },
   {
     projectName: "Angel Howe",
-    avatar:
-      "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/46.jpg",
+    avatar: "https://loremflickr.com/640/480/people",
     status: "status 4",
     latestUpdate: "15 May 2021",
     resources: 3,
@@ -47,8 +43,7 @@ export const PROJECT_LIST: Project[] = [
   },
   {
     projectName: "Jeannie Hagenes",
-    avatar:
-      "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/274.jpg",
+    avatar: "https://loremflickr.com/640/480/people",
     status: "status 5",
     latestUpdate: "15 May 2021",
     resources: 4,
@@ -58,8 +53,7 @@ export const PROJECT_LIST: Project[] = [
   },
   {
     projectName: "Derrick Considine",
-    avatar:
-      "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1221.jpg",
+    avatar: "https://loremflickr.com/640/480/people",
     status: "status 6",
     latestUpdate: "15 May 2021",
     resources: 2,

@@ -1,24 +1,18 @@
-import { memo } from "react";
+import { lazy, memo, Suspense } from "react";
+
+// Chakra UI
+import { Avatar, Flex, Td, useDisclosure } from "@chakra-ui/react";
 
 // Types
 import { DropdownItemType, Project } from "@/types";
 
 // Components
-import { Avatar, Flex, Td } from "@chakra-ui/react";
-import { Dropdown } from "@/components";
+import { Dropdown, LoadingIndicator } from "@/components";
+const FormModal = lazy(() => import("@/components/FormModal"));
 
 interface TableRowPops {
   project: Project;
 }
-
-const actionMenu: DropdownItemType[] = [
-  {
-    name: "Edit",
-  },
-  {
-    name: "Delete",
-  },
-];
 
 const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
   const {
@@ -32,11 +26,27 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
     finishAt,
   } = project;
 
+  const {
+    isOpen: isOpenEdit,
+    onOpen: onOpenEdit,
+    onClose: onCloseEdit,
+  } = useDisclosure();
+
+  const actionMenu: DropdownItemType[] = [
+    {
+      name: "Edit",
+      action: onOpenEdit,
+    },
+    {
+      name: "Delete",
+    },
+  ];
+
   return (
     <>
       <Td>{projectName}</Td>
       <Td>
-        <Avatar name={projectName} src={avatar} />
+        <Avatar borderRadius="6px" name={projectName} src={avatar} />
       </Td>
       <Td>{status}</Td>
       <Td>{latestUpdate}</Td>
@@ -54,18 +64,38 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
         </Flex>
       </Td>
       <Td display="flex" flexDir="row" gap="2" alignItems="center">
-        <Flex bg="background.primary" borderRadius="6px" p="5px 10px">
+        <Flex
+          bg="background.primary"
+          borderRadius="6px"
+          p="5px 10px"
+          color="text.secondary"
+        >
           {createdAt}
         </Flex>
         {">"}
-        <Flex bg="background.primary" borderRadius="6px" p="5px 10px">
+        <Flex
+          bg="background.primary"
+          borderRadius="6px"
+          p="5px 10px"
+          color="text.secondary"
+        >
           {finishAt}
         </Flex>
       </Td>
-      <Td>{estimation}</Td>
+      <Td>{`US$ ${estimation}`}</Td>
       <Td>
         <Dropdown dropdownItems={actionMenu} />
       </Td>
+      <Suspense fallback={<LoadingIndicator />}>
+        {isOpenEdit && (
+          <FormModal
+            modalTitle="Edit project"
+            buttonLabel="Confirm"
+            onClose={onCloseEdit}
+            onConfirm={() => {}}
+          />
+        )}
+      </Suspense>
     </>
   );
 });

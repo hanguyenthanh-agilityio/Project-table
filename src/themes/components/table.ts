@@ -11,6 +11,7 @@ export const Table = {
     },
     td: {
       fontSize: "14px",
+      h: "80px",
     },
     th: {
       fontSize: "12px",

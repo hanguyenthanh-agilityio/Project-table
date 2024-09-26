@@ -1,6 +1,6 @@
 const colors = {
   brand: {
-    900: "#1a365d",
+    900: "#222834",
     800: "#153e75",
     700: "#2a69ac",
     80: "#2f79d0",
@@ -22,6 +22,7 @@ const colors = {
     purple: "#5e5adb",
     gray: "#f7f8fa",
     primary: "#e9edf5",
+    heading: "#f7f9fd",
   },
 
   border: {
