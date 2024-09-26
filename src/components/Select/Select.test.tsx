@@ -8,26 +8,39 @@ import Select from "./index";
 import { OPTION_SORT } from "@/constants";
 
 describe("Select", () => {
-  const onChange = jest.fn();
   const props = {
     options: OPTION_SORT,
-    onClick: onChange,
+    onChange: jest.fn(),
+    value: "edit",
   };
 
-  test("Should match snapshot", async () => {
-    const container = render(<Select {...props} />);
+  const mock = jest.fn();
+
+  const component = () => {
+    return render(<Select {...props} onChange={mock} />);
+  };
+
+  it("Should match snapshot", async () => {
+    const container = component();
 
     expect(container).toMatchSnapshot();
   });
 
   it("Should render Select correctly with onChange props", async () => {
-    const mock = jest.fn();
-    const { getByTestId } = render(<Select {...props} onChange={mock} />);
+    const { getByTestId } = component();
 
     const select = getByTestId("select-base");
 
     fireEvent.change(select, { target: { value: 2 } });
 
     expect(mock).toHaveBeenCalled();
+  });
+
+  it("Should render Select with correct value", async () => {
+    const { getByDisplayValue } = component();
+
+    const selectOption = getByDisplayValue("Edit");
+
+    expect(selectOption).toBeInTheDocument();
   });
 });
