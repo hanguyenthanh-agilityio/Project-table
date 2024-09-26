@@ -11,6 +11,9 @@ import { Dropdown, LoadingIndicator } from "@/components";
 const ConfirmModal = lazy(() => import("@/components/ConfirmModal"));
 const FormModal = lazy(() => import("@/components/FormModal"));
 
+// Utils
+import { formatDate, formatTimeline } from "@/utils";
+
 interface TableRowPops {
   project: Project;
 }
@@ -60,7 +63,7 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
         <Avatar borderRadius="6px" name={projectName} src={avatar} />
       </Td>
       <Td>{status}</Td>
-      <Td>{latestUpdate}</Td>
+      <Td>{formatDate(latestUpdate)}</Td>
       <Td textAlign="center">
         <Flex
           bg="background.primary"
@@ -80,8 +83,10 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
           borderRadius="6px"
           p="5px 10px"
           color="text.secondary"
+          minW="100px"
+          justifyContent="center"
         >
-          {createdAt}
+          {formatTimeline(createdAt)}
         </Flex>
         {">"}
         <Flex
@@ -89,8 +94,10 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
           borderRadius="6px"
           p="5px 10px"
           color="text.secondary"
+          minW="100px"
+          justifyContent="center"
         >
-          {finishAt}
+          {formatTimeline(finishAt)}
         </Flex>
       </Td>
       <Td>{`US$ ${estimation}`}</Td>

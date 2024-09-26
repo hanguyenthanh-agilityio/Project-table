@@ -2,14 +2,23 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 // Pages
 import { Home } from "@/pages";
-import CHAKRA_THEME_DEFAULT from "./themes/chakra";
 
 // Themes
+import CHAKRA_THEME_DEFAULT from "./themes/chakra";
+
+// React query
+import { QueryClient, QueryClientProvider } from "react-query";
+
+// Create a client
+const queryClient = new QueryClient();
 
 const App = () => (
-  <ChakraProvider theme={CHAKRA_THEME_DEFAULT}>
-    <Home />
-  </ChakraProvider>
+  // Provide the client to your App
+  <QueryClientProvider client={queryClient}>
+    <ChakraProvider theme={CHAKRA_THEME_DEFAULT}>
+      <Home />
+    </ChakraProvider>
+  </QueryClientProvider>
 );
 
 export default App;
