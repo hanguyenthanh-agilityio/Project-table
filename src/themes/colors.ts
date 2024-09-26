@@ -20,14 +20,18 @@ const colors = {
     default: "#fff",
     light: "#f9fafd",
     purple: "#5e5adb",
+    darkPurple: "#151357",
     gray: "#f7f8fa",
+    red: "#d1293d",
     primary: "#e9edf5",
+    secondary: "#2a278f",
     heading: "#f7f9fd",
   },
 
   border: {
     default: "#e0e2e4",
     primary: "#e9edf5",
+    secondary: "#2a278f",
   },
 };
 
