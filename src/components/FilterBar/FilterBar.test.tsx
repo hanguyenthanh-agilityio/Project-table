@@ -6,6 +6,9 @@ import FilterBar from ".";
 describe("FilterBar component", () => {
   const props = {
     isLoading: false,
+    isOpen: true,
+    onClickAdd: jest.fn(),
+    onClose: jest.fn(),
     onChangeSearch: jest.fn(),
     onConfirm: jest.fn(),
   };
