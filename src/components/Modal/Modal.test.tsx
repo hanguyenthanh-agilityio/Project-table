@@ -9,6 +9,7 @@ describe("BaseModal render", () => {
     modalTitle: "Update",
     children: <>Modal</>,
     isOpen: true,
+    isConfirmModal: false,
     onClose: jest.fn(),
   };
 

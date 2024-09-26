@@ -65,6 +65,7 @@ const FormModal = memo<FormModalProps>(
         ButtonClose="Cancel"
         isLoading={isLoading}
         isOpen={true}
+        isConfirmModal={false}
         onClick={handleSubmit(onSubmit)}
         onClose={onClose}
         data-testid="modal"

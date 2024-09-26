@@ -18,5 +18,10 @@ export const Button = {
       bg: "background.purple",
       color: "text.light",
     },
+
+    delete: {
+      bg: "background.red",
+      color: "text.light",
+    },
   },
 };
