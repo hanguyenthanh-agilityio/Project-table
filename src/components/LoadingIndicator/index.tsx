@@ -1,6 +1,6 @@
 import { Box, Spinner, Text } from "@chakra-ui/react";
 
-const LoadingIndicator = ({ text }: { text: string }) => (
+const LoadingIndicator = ({ text }: { text?: string }) => (
   <Box
     display="flex"
     flexDir="column"
