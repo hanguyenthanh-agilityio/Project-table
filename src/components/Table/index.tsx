@@ -2,11 +2,11 @@ import { memo } from "react";
 
 // Components
 import TableHeader from "./TableHeader";
+import TableBody from "./TableBody";
 import { Table as TableChakra, TableContainer } from "@chakra-ui/react";
 
 // Types
 import { HeaderList, Project } from "@/types";
-import TableBody from "./TableBody";
 
 interface TableProp {
   headerList: HeaderList[];

@@ -8,7 +8,11 @@ import { DropdownItemType, Project } from "@/types";
 
 // Components
 import { Dropdown, LoadingIndicator } from "@/components";
+const ConfirmModal = lazy(() => import("@/components/ConfirmModal"));
 const FormModal = lazy(() => import("@/components/FormModal"));
+
+// Utils
+import { formatDate, formatTimeline } from "@/utils";
 
 interface TableRowPops {
   project: Project;
@@ -32,6 +36,12 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
     onClose: onCloseEdit,
   } = useDisclosure();
 
+  const {
+    isOpen: isOpenDelete,
+    onOpen: onOpenDelete,
+    onClose: onCloseDelete,
+  } = useDisclosure();
+
   const actionMenu: DropdownItemType[] = [
     {
       name: "Edit",
@@ -39,8 +49,12 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
     },
     {
       name: "Delete",
+      action: onOpenDelete,
     },
   ];
+
+  const handleEdit = () => {};
+  const handleDelete = () => {};
 
   return (
     <>
@@ -49,7 +63,7 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
         <Avatar borderRadius="6px" name={projectName} src={avatar} />
       </Td>
       <Td>{status}</Td>
-      <Td>{latestUpdate}</Td>
+      <Td>{formatDate(latestUpdate)}</Td>
       <Td textAlign="center">
         <Flex
           bg="background.primary"
@@ -69,8 +83,10 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
           borderRadius="6px"
           p="5px 10px"
           color="text.secondary"
+          minW="100px"
+          justifyContent="center"
         >
-          {createdAt}
+          {formatTimeline(createdAt)}
         </Flex>
         {">"}
         <Flex
@@ -78,24 +94,35 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
           borderRadius="6px"
           p="5px 10px"
           color="text.secondary"
+          minW="100px"
+          justifyContent="center"
         >
-          {finishAt}
+          {formatTimeline(finishAt)}
         </Flex>
       </Td>
       <Td>{`US$ ${estimation}`}</Td>
       <Td>
         <Dropdown dropdownItems={actionMenu} />
+        <Suspense fallback={<LoadingIndicator />}>
+          {isOpenEdit && (
+            <FormModal
+              modalTitle="Edit project"
+              buttonLabel="Confirm"
+              onClose={onCloseEdit}
+              onConfirm={handleEdit}
+            />
+          )}
+          {isOpenDelete && (
+            <ConfirmModal
+              description={`Are you sure you want to delete ${projectName}? If you delete, it will be permanently lost.`}
+              buttonLabel="Delete"
+              isOpen={isOpenDelete}
+              onClose={onCloseDelete}
+              onDelete={handleDelete}
+            />
+          )}
+        </Suspense>
       </Td>
-      <Suspense fallback={<LoadingIndicator />}>
-        {isOpenEdit && (
-          <FormModal
-            modalTitle="Edit project"
-            buttonLabel="Confirm"
-            onClose={onCloseEdit}
-            onConfirm={() => {}}
-          />
-        )}
-      </Suspense>
     </>
   );
 });

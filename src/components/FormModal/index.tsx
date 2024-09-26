@@ -7,6 +7,8 @@ import { Flex, Text, FormLabel, SimpleGrid } from "@chakra-ui/react";
 
 // Types
 import { Project } from "@/types";
+
+// Constants
 import { ERROR_MESSAGES } from "@/constants";
 
 interface FormModalProps {
@@ -63,6 +65,7 @@ const FormModal = memo<FormModalProps>(
         ButtonClose="Cancel"
         isLoading={isLoading}
         isOpen={true}
+        isConfirmModal={false}
         onClick={handleSubmit(onSubmit)}
         onClose={onClose}
         data-testid="modal"

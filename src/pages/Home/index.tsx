@@ -1,15 +1,42 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useToast } from "@chakra-ui/react";
 
 // Components
-import { Pagination, Table, FilterBar, Sidebar } from "@/components";
+import {
+  Pagination,
+  Table,
+  FilterBar,
+  Sidebar,
+  LoadingIndicator,
+} from "@/components";
 
 // Constants
 import { HEADER_TABLE } from "@/constants";
 
 // Mocks
 import { PROJECT_LIST } from "@/mocks/table";
+import { useProjectList } from "@/hooks/useProject";
+import { useCallback } from "react";
 
 const Home = () => {
+  const toast = useToast();
+
+  const handleError = useCallback(
+    (error: string) => {
+      toast({
+        title: error,
+        status: "error",
+        isClosable: true,
+      });
+    },
+    [toast],
+  );
+
+  // Get list project
+  const { isLoading, data: projects } = useProjectList(
+    { page: 1, limit: 10 },
+    handleError,
+  );
+
   // Handle Search project
   const handleChangeSearch = () => {};
 
@@ -28,7 +55,11 @@ const Home = () => {
             onChangeSearch={handleChangeSearch}
             onConfirm={handleConfirm}
           />
-          <Table headerList={HEADER_TABLE} projects={PROJECT_LIST} />
+          {isLoading ? (
+            <LoadingIndicator />
+          ) : (
+            <Table headerList={HEADER_TABLE} projects={projects} />
+          )}
           <Pagination
             projects={PROJECT_LIST}
             onClickPrevious={handleClickPrevious}
