@@ -3,13 +3,10 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 
 // Components
 import { Modal, FormInput, DateRangePicker } from "@/components";
-import { Flex, Text, FormLabel, SimpleGrid } from "@chakra-ui/react";
+import { Flex, FormLabel, SimpleGrid } from "@chakra-ui/react";
 
 // Types
 import { Project } from "@/types";
-
-// Constants
-import { ERROR_MESSAGES } from "@/constants";
 
 interface FormModalProps {
   modalTitle: string;
@@ -109,7 +106,7 @@ const FormModal = memo<FormModalProps>(
                 <Controller
                   name="createdAt"
                   control={control}
-                  rules={{ required: ERROR_MESSAGES.FIELD_REQUIRED }}
+                  // rules={{ required: ERROR_MESSAGES.FIELD_REQUIRED }}
                   render={(props) => (
                     <DateRangePicker
                       label="From"
@@ -121,11 +118,11 @@ const FormModal = memo<FormModalProps>(
                     />
                   )}
                 />
-                {errors.createdAt && (
+                {/* {errors.createdAt && (
                   <Text color="red.500" fontSize="sm">
                     {errors.createdAt.message}
                   </Text>
-                )}
+                )} */}
               </Flex>
 
               {/* End date */}
@@ -133,7 +130,7 @@ const FormModal = memo<FormModalProps>(
                 <Controller
                   name="finishAt"
                   control={control}
-                  rules={{ required: ERROR_MESSAGES.FIELD_REQUIRED }}
+                  // rules={{ required: ERROR_MESSAGES.FIELD_REQUIRED }}
                   render={(props) => (
                     <DateRangePicker
                       label="To"
@@ -146,11 +143,11 @@ const FormModal = memo<FormModalProps>(
                     />
                   )}
                 />
-                {errors.finishAt && (
+                {/* {errors.finishAt && (
                   <Text color="red.500" fontSize="sm">
                     {errors.finishAt.message}
                   </Text>
-                )}
+                )} */}
               </Flex>
             </Flex>
             {/* Estimation */}

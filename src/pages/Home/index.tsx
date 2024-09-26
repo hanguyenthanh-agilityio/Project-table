@@ -1,5 +1,5 @@
-import { Flex, useToast } from "@chakra-ui/react";
-
+import { Flex, useDisclosure, useToast } from "@chakra-ui/react";
+import { useCallback } from "react";
 // Components
 import {
   Pagination,
@@ -14,10 +14,15 @@ import { HEADER_TABLE } from "@/constants";
 
 // Mocks
 import { PROJECT_LIST } from "@/mocks/table";
-import { useProjectList } from "@/hooks/useProject";
-import { useCallback } from "react";
+
+// Hooks
+import { useAddProjectMutation, useProjectList } from "@/hooks/useProject";
+
+// Types
+import { Project } from "@/types";
 
 const Home = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
   const handleError = useCallback(
@@ -37,11 +42,29 @@ const Home = () => {
     handleError,
   );
 
+  const { mutate: addProject, isLoading: isLoadingAdd } =
+    useAddProjectMutation();
+
   // Handle Search project
   const handleChangeSearch = () => {};
 
+  // Show message when create success and close modal
+  const handleConfirmSuccess = useCallback(() => {
+    onClose();
+    toast({
+      title: "Project created.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  }, [onClose, toast]);
+
   // Handle Confirm add new project
-  const handleConfirm = () => {};
+  const handleConfirm = useCallback((data: Project) => {
+    addProject(data, {
+      onSuccess: handleConfirmSuccess,
+    });
+  }, []);
 
   // Handle pagination
   const handleClickPrevious = () => {};
@@ -51,9 +74,12 @@ const Home = () => {
       <Sidebar>
         <Flex flexDir="column">
           <FilterBar
-            isLoading={false}
+            isLoading={isLoadingAdd}
             onChangeSearch={handleChangeSearch}
             onConfirm={handleConfirm}
+            isOpen={isOpen}
+            onClickAdd={onOpen}
+            onClose={onClose}
           />
           {isLoading ? (
             <LoadingIndicator />
