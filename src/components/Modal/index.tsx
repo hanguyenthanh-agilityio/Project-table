@@ -19,6 +19,7 @@ interface ModalProps {
   children?: React.ReactNode;
   isOpen?: boolean;
   isLoading?: boolean;
+  isConfirmModal: boolean;
   onClose: () => void;
   onClick?: () => void;
 }
@@ -31,6 +32,7 @@ const Modal = memo<ModalProps>(
     children,
     isOpen = false,
     isLoading,
+    isConfirmModal,
     onClose,
     onClick,
   }: ModalProps) => {
@@ -42,18 +44,22 @@ const Modal = memo<ModalProps>(
           <ModalHeader
             textAlign="left"
             data-testid="title"
-            borderBottom="1px solid #e0e2e4"
+            borderBottom={isConfirmModal ? "" : "1px solid #e0e2e4"}
+            p={isConfirmModal ? "16px 24px 5px" : " 16px 24px"}
           >
             {modalTitle}
           </ModalHeader>
           <ModalCloseButton data-testid="modal-close-button" />
           {/* Body */}
-          <ModalBody textAlign="center" bg="background.gray">
+          <ModalBody
+            textAlign="center"
+            bg={isConfirmModal ? "" : "background.gray"}
+          >
             {children}
           </ModalBody>
           {/* Footer */}
           <ModalFooter
-            padding="20px 0"
+            padding="15px 0"
             display="flex"
             justifyContent="right"
             gap="20px"
@@ -70,7 +76,7 @@ const Modal = memo<ModalProps>(
               mr="20px"
               type="submit"
               data-testid="confirm-button"
-              variant="primary"
+              variant={isConfirmModal ? "delete" : "primary"}
               isLoading={isLoading}
               onClick={onClick}
             >

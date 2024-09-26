@@ -8,6 +8,7 @@ import { DropdownItemType, Project } from "@/types";
 
 // Components
 import { Dropdown, LoadingIndicator } from "@/components";
+const ConfirmModal = lazy(() => import("@/components/ConfirmModal"));
 const FormModal = lazy(() => import("@/components/FormModal"));
 
 interface TableRowPops {
@@ -32,6 +33,12 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
     onClose: onCloseEdit,
   } = useDisclosure();
 
+  const {
+    isOpen: isOpenDelete,
+    onOpen: onOpenDelete,
+    onClose: onCloseDelete,
+  } = useDisclosure();
+
   const actionMenu: DropdownItemType[] = [
     {
       name: "Edit",
@@ -39,8 +46,12 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
     },
     {
       name: "Delete",
+      action: onOpenDelete,
     },
   ];
+
+  const handleEdit = () => {};
+  const handleDelete = () => {};
 
   return (
     <>
@@ -85,17 +96,26 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
       <Td>{`US$ ${estimation}`}</Td>
       <Td>
         <Dropdown dropdownItems={actionMenu} />
+        <Suspense fallback={<LoadingIndicator />}>
+          {isOpenEdit && (
+            <FormModal
+              modalTitle="Edit project"
+              buttonLabel="Confirm"
+              onClose={onCloseEdit}
+              onConfirm={handleEdit}
+            />
+          )}
+          {isOpenDelete && (
+            <ConfirmModal
+              description={`Are you sure you want to delete ${projectName}? If you delete, it will be permanently lost.`}
+              buttonLabel="Delete"
+              isOpen={isOpenDelete}
+              onClose={onCloseDelete}
+              onDelete={handleDelete}
+            />
+          )}
+        </Suspense>
       </Td>
-      <Suspense fallback={<LoadingIndicator />}>
-        {isOpenEdit && (
-          <FormModal
-            modalTitle="Edit project"
-            buttonLabel="Confirm"
-            onClose={onCloseEdit}
-            onConfirm={() => {}}
-          />
-        )}
-      </Suspense>
     </>
   );
 });
