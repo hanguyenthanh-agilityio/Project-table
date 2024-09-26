@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 
 // React query
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 // Services
 import { axiosClient } from "@/services";
@@ -24,4 +24,22 @@ export const useProjectList = (
     ...rest,
     data: data?.data || [],
   };
+};
+
+// Add new project
+export const useAddProjectMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload?: Project) =>
+      await axiosClient.post<Project>(
+        "https://66ea827255ad32cda4792c16.mockapi.io/projects",
+        payload,
+      ),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: "projects",
+      });
+    },
+  });
 };
