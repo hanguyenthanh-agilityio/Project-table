@@ -1,10 +1,17 @@
+import { Box, Button } from "@chakra-ui/react";
+
 type PropsTypes = {
   label: string;
   onClick: () => void;
 };
 
-const Button = ({ label, onClick }: PropsTypes) => {
-  return <button onClick={onClick}>{label}</button>;
+const ButtonComponent = ({ label, onClick }: PropsTypes) => {
+  return (
+    <>
+      <Button onClick={onClick}>{label}</Button>
+      <Box bg="background.darkPurple">This is button component</Box>
+    </>
+  );
 };
 
-export default Button;
+export default ButtonComponent;
