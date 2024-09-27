@@ -216,3 +216,14 @@ export const PROJECT_LIST: Project[] = [
     estimation: "estimation 20",
   },
 ];
+
+export const PROJECT_ITEM = {
+  projectName: "Karla Hyatt",
+  avatar: "https://loremflickr.com/640/480/people",
+  status: "status 1",
+  latestUpdate: "15 May 2021",
+  resources: 1,
+  createdAt: "15 May 2021",
+  finishAt: "15 May 2021",
+  estimation: "800",
+};
