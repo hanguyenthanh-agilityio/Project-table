@@ -1,13 +1,7 @@
 import { Flex, useDisclosure, useToast } from "@chakra-ui/react";
 import { useCallback } from "react";
 // Components
-import {
-  Pagination,
-  Table,
-  FilterBar,
-  Sidebar,
-  LoadingIndicator,
-} from "@/components";
+import { Table, FilterBar, Sidebar, LoadingIndicator } from "@/components";
 
 // Constants
 import { HEADER_TABLE } from "@/constants";
@@ -20,6 +14,7 @@ import { useAddProjectMutation, useProjectList } from "@/hooks/useProject";
 
 // Types
 import { Project } from "@/types";
+import Pagination from "@/components/Pagination";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
