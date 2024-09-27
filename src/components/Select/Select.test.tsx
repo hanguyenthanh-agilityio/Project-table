@@ -5,11 +5,11 @@ import { fireEvent, render } from "@testing-library/react";
 import Select from "./index";
 
 //Constants
-import { OPTION_SORT } from "@/constants";
+import { OPTION_SELECT } from "@/constants";
 
 describe("Select", () => {
   const props = {
-    options: OPTION_SORT,
+    options: OPTION_SELECT,
     onChange: jest.fn(),
     value: "edit",
   };
