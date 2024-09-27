@@ -3,7 +3,6 @@ import { Button, useDisclosure } from "@chakra-ui/react";
 
 // Components
 import ConfirmModal from ".";
-import FormModal from "../FormModal";
 
 const meta = {
   title: "Example/ConfirmModal",
@@ -51,20 +50,13 @@ export const Primary: Story = {
     isOpen: true,
     onClose: () => {},
   },
-  render: () => {
+  render: (args) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
       <>
         <Button onClick={onOpen}>Open Modal</Button>
-        {isOpen && (
-          <FormModal
-            modalTitle="Delete project"
-            buttonLabel="Delete"
-            onClose={onClose}
-            onConfirm={() => {}}
-          />
-        )}
+        {isOpen && <ConfirmModal {...args} onClose={onClose} />}
       </>
     );
   },

@@ -1,25 +1,20 @@
 import { Flex, useDisclosure, useToast } from "@chakra-ui/react";
 import { useCallback } from "react";
 // Components
-import {
-  Pagination,
-  Table,
-  FilterBar,
-  Sidebar,
-  LoadingIndicator,
-} from "@/components";
+import { Table, FilterBar, Sidebar, LoadingIndicator } from "@/components";
 
 // Constants
 import { HEADER_TABLE } from "@/constants";
 
 // Mocks
-import { PROJECT_LIST } from "@/mocks/table";
+// import { PROJECT_LIST } from "@/mocks/table";
 
 // Hooks
 import { useAddProjectMutation, useProjectList } from "@/hooks/useProject";
 
 // Types
 import { Project } from "@/types";
+// import Pagination from "@/components/Pagination";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -67,8 +62,8 @@ const Home = () => {
   }, []);
 
   // Handle pagination
-  const handleClickPrevious = () => {};
-  const handleCLickNext = () => {};
+  // const handleClickPrevious = () => {};
+  // const handleCLickNext = () => {};
   return (
     <>
       <Sidebar>
@@ -86,11 +81,11 @@ const Home = () => {
           ) : (
             <Table headerList={HEADER_TABLE} projects={projects} />
           )}
-          <Pagination
+          {/* <Pagination
             projects={PROJECT_LIST}
             onClickPrevious={handleClickPrevious}
             onClickNext={handleCLickNext}
-          />
+          /> */}
         </Flex>
       </Sidebar>
     </>
