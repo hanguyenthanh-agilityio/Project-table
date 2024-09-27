@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { useForm, UseFormRegister } from "react-hook-form";
 
 // Components
 import FormInput from ".";
-import { useForm, UseFormRegister } from "react-hook-form";
 
 interface FormData {
   name: string;
