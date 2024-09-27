@@ -25,7 +25,7 @@ const ConfirmModal = memo<ConfirmModalProps>(
     <Modal
       modalTitle="Delete project"
       buttonAction={buttonLabel}
-      ButtonClose="Cancel"
+      buttonClose="Cancel"
       isOpen={isOpen}
       isLoading={isLoading}
       isConfirmModal={true}
