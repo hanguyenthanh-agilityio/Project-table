@@ -28,6 +28,6 @@ describe("Input component", () => {
     const clickInput = getByTestId("input-field");
 
     fireEvent.change(clickInput, { target: { value: "input" } });
-    expect(props.onChange).toBeCalled();
+    expect(props.onChange).toHaveBeenCalledTimes(1);
   });
 });
