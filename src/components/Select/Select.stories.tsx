@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import Select from ".";
 
 // Constants
-import { OPTION_SORT } from "@/constants";
+import { OPTION_SELECT } from "@/constants";
 
 const meta = {
   title: "Example/Select",
@@ -43,7 +43,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    options: OPTION_SORT,
+    options: OPTION_SELECT,
     placeholder: "Sort by",
     onChange: () => {},
   },
