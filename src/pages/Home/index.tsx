@@ -1,20 +1,22 @@
 import { Flex, useDisclosure, useToast } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 // Components
-import { Table, FilterBar, Sidebar, LoadingIndicator } from "@/components";
+import {
+  Table,
+  FilterBar,
+  Sidebar,
+  LoadingIndicator,
+  Pagination,
+} from "@/components";
 
 // Constants
 import { HEADER_TABLE } from "@/constants";
-
-// Mocks
-// import { PROJECT_LIST } from "@/mocks/table";
 
 // Hooks
 import { useAddProjectMutation, useProjectList } from "@/hooks/useProject";
 
 // Types
 import { Params, Project } from "@/types";
-// import Pagination from "@/components/Pagination";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -69,8 +71,16 @@ const Home = () => {
   }, []);
 
   // Handle pagination
-  // const handleClickPrevious = () => {};
-  // const handleCLickNext = () => {};
+  const handleClickNext = () => {
+    setFilter({ ...filter, page: Number(filter.page) + 1 });
+  };
+
+  const handleClickPrevious = () => {
+    setFilter({ ...filter, page: Number(filter.page) - 1 });
+  };
+
+  const totalPages = Math.ceil(28 / filter.limit);
+
   return (
     <>
       <Sidebar>
@@ -88,11 +98,16 @@ const Home = () => {
           ) : (
             <Table headerList={HEADER_TABLE} projects={projects} />
           )}
-          {/* <Pagination
-            projects={PROJECT_LIST}
+          <Pagination
+            projects={projects}
+            disable={filter.page === 1}
             onClickPrevious={handleClickPrevious}
-            onClickNext={handleCLickNext}
-          /> */}
+            onClickNext={handleClickNext}
+            startIndex={filter.page}
+            totalPages={totalPages}
+            endIndex={filter.limit}
+            totalItem={28}
+          />
         </Flex>
       </Sidebar>
     </>
