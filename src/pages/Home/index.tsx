@@ -1,5 +1,5 @@
 import { Flex, useDisclosure, useToast } from "@chakra-ui/react";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 // Components
 import { Table, FilterBar, Sidebar, LoadingIndicator } from "@/components";
 
@@ -13,12 +13,20 @@ import { HEADER_TABLE } from "@/constants";
 import { useAddProjectMutation, useProjectList } from "@/hooks/useProject";
 
 // Types
-import { Project } from "@/types";
+import { Params, Project } from "@/types";
 // import Pagination from "@/components/Pagination";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+
+  const initialFilters = {
+    projectName: "",
+    page: 1,
+    limit: 10,
+  };
+
+  const [filter, setFilter] = useState<Params>(initialFilters);
 
   const handleError = useCallback(
     (error: string) => {
@@ -32,16 +40,15 @@ const Home = () => {
   );
 
   // Get list project
-  const { isLoading, data: projects } = useProjectList(
-    { page: 1, limit: 10 },
-    handleError,
-  );
+  const { isLoading, data: projects } = useProjectList(filter, handleError);
 
   const { mutate: addProject, isLoading: isLoadingAdd } =
     useAddProjectMutation();
 
   // Handle Search project
-  const handleChangeSearch = () => {};
+  const handleChangeSearch = useCallback((projectName: string) => {
+    setFilter({ ...filter, projectName });
+  }, []);
 
   // Show message when create success and close modal
   const handleConfirmSuccess = useCallback(() => {
