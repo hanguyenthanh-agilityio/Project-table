@@ -79,7 +79,7 @@ const Home = () => {
     setFilter({ ...filter, page: Number(filter.page) - 1 });
   };
 
-  const totalPages = Math.ceil(28 / filter.limit);
+  const totalPages = Math.ceil(45 / filter.limit);
 
   return (
     <>
@@ -106,7 +106,7 @@ const Home = () => {
             startIndex={filter.page}
             totalPages={totalPages}
             endIndex={filter.limit}
-            totalItem={28}
+            totalItem={45}
           />
         </Flex>
       </Sidebar>
