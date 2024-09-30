@@ -13,7 +13,10 @@ const FormModal = lazy(() => import("@/components/FormModal"));
 
 // Utils
 import { formatDate, formatTimeline } from "@/utils";
-import { useEditProjectMutation } from "@/hooks/useProject";
+import {
+  useDeleteProjectMutation,
+  useEditProjectMutation,
+} from "@/hooks/useProject";
 import { AxiosError } from "axios";
 
 interface TableRowPops {
@@ -59,6 +62,8 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
 
   const { mutate: ediProject, isLoading: isLoadingEdit } =
     useEditProjectMutation();
+  const { mutate: deleteProject, isLoading: isLoadingDelete } =
+    useDeleteProjectMutation();
 
   const handleError = useCallback((error: string) => {
     toast({
@@ -72,13 +77,13 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
   const handleEditSuccess = useCallback(() => {
     onCloseEdit();
     toast({
-      title: "Appointment updated.",
+      title: "Project updated.",
       status: "success",
       duration: 3000,
       isClosable: true,
     });
   }, []);
-  //Handle update appointment
+  //Handle update Project
   const handleEdit = useCallback((data: Project) => {
     if (project.id) {
       ediProject(data, {
@@ -88,7 +93,26 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
     }
   }, []);
 
-  const handleDelete = () => {};
+  // Show message when delete success
+  const handleDeleteSuccess = useCallback(() => {
+    onCloseDelete();
+    toast({
+      title: "Project deleted.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  }, []);
+
+  //Handle delete Project
+  const handleDelete = useCallback(() => {
+    if (project.id) {
+      deleteProject(project.id.toString(), {
+        onSuccess: handleDeleteSuccess,
+        onError: (error) => handleError((error as AxiosError).message),
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -155,6 +179,7 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
               isOpen={isOpenDelete}
               onClose={onCloseDelete}
               onDelete={handleDelete}
+              isLoading={isLoadingDelete}
             />
           )}
         </Suspense>
