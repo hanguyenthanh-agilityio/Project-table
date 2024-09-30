@@ -43,3 +43,18 @@ export const useAddProjectMutation = () => {
     },
   });
 };
+
+// Edit project
+export const useEditProjectMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: Project) =>
+      await axiosClient.put<Project>(`projects/${payload.id}`, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: "projects",
+      });
+    },
+  });
+};
