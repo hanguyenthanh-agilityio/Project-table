@@ -1,5 +1,6 @@
 import { Th, Thead, Tr } from "@chakra-ui/react";
 import { HeaderList } from "@/types";
+import { memo } from "react";
 
 interface TableHeaderProps {
   headerList: HeaderList[];
@@ -8,24 +9,28 @@ interface TableHeaderProps {
   sortDirection: "asc" | "desc";
 }
 
-const TableHeader = ({
-  headerList,
-  onSort,
-  sortColumn,
-  sortDirection,
-}: TableHeaderProps) => (
-  <Thead>
-    <Tr>
-      {headerList.map(({ title, key }, index) => (
-        <Th key={`title-${index}`} cursor="pointer" onClick={() => onSort(key)}>
-          {title}
-          {sortColumn === key && (
-            <span>{sortDirection === "asc" ? " ▲" : " ▼"}</span>
-          )}
-        </Th>
-      ))}
-    </Tr>
-  </Thead>
+const TableHeader = memo<TableHeaderProps>(
+  ({ headerList, onSort, sortColumn, sortDirection }: TableHeaderProps) => {
+    const handleClick = (key: string) => onSort(key);
+    return (
+      <Thead>
+        <Tr>
+          {headerList.map(({ title, key }, index) => (
+            <Th
+              key={`title-${index}`}
+              cursor="pointer"
+              onClick={() => handleClick(key)}
+            >
+              {title}
+              {sortColumn === key && (
+                <span>{sortDirection === "asc" ? " ▲" : " ▼"}</span>
+              )}
+            </Th>
+          ))}
+        </Tr>
+      </Thead>
+    );
+  },
 );
 
 export default TableHeader;
