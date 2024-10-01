@@ -1,28 +1,18 @@
+// Components
 import { Th, Thead, Tr } from "@chakra-ui/react";
+
+// Types
 import { HeaderList } from "@/types";
 
 interface TableHeaderProps {
   headerList: HeaderList[];
-  onSort: (column: string) => void;
-  sortColumn: string | null;
-  sortDirection: "asc" | "desc";
 }
 
-const TableHeader = ({
-  headerList,
-  onSort,
-  sortColumn,
-  sortDirection,
-}: TableHeaderProps) => (
+const TableHeader = ({ headerList }: TableHeaderProps) => (
   <Thead>
     <Tr>
-      {headerList.map(({ title, key }, index) => (
-        <Th key={`title-${index}`} cursor="pointer" onClick={() => onSort(key)}>
-          {title}
-          {sortColumn === key && (
-            <span>{sortDirection === "asc" ? " ▲" : " ▼"}</span>
-          )}
-        </Th>
+      {headerList.map(({ title }, index) => (
+        <Th key={`title-${index}`}>{title}</Th>
       ))}
     </Tr>
   </Thead>

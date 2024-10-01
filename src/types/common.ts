@@ -5,7 +5,6 @@ export type SelectType = {
 
 export type HeaderList = {
   title: string;
-  key: string;
 };
 
 export type DropdownItemType = {
