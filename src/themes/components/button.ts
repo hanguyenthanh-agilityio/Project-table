@@ -17,6 +17,7 @@ export const Button = {
     primary: {
       bg: "background.purple",
       color: "text.light",
+      _hover: { bg: "background.purple" },
     },
 
     delete: {

@@ -1,4 +1,4 @@
-import { Flex, useDisclosure, useToast } from "@chakra-ui/react";
+import { Flex, Text, useDisclosure, useToast } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 // Components
 import {
@@ -64,11 +64,14 @@ const Home = () => {
   }, [onClose, toast]);
 
   // Handle Confirm add new project
-  const handleConfirm = useCallback((data: Project) => {
-    addProject(data, {
-      onSuccess: handleConfirmSuccess,
-    });
-  }, []);
+  const handleConfirm = useCallback(
+    (data: Project) => {
+      addProject(data, {
+        onSuccess: handleConfirmSuccess,
+      });
+    },
+    [addProject, handleConfirmSuccess],
+  );
 
   // Handle pagination
   const handleClickNext = () => {
@@ -95,6 +98,8 @@ const Home = () => {
           />
           {isLoading ? (
             <LoadingIndicator />
+          ) : projects?.length === 0 ? (
+            <Text>No projects found</Text>
           ) : (
             <Table headerList={HEADER_TABLE} projects={projects} />
           )}
