@@ -67,7 +67,7 @@ const ActionCell = ({ project }: ActionCellProps) => {
     [toast],
   );
 
-  // Handle edit success
+  // Show message when update success
   const handleEditSuccess = useCallback(() => {
     onCloseEdit();
     toast({
@@ -102,7 +102,7 @@ const ActionCell = ({ project }: ActionCellProps) => {
     });
   }, [onCloseDelete, toast]);
 
-  // Handle delete project logic
+  // Handle delete Project
   const handleDelete = useCallback(() => {
     if (project.id) {
       deleteProject(project.id.toString(), {

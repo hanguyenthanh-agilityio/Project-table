@@ -4,6 +4,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import TableRow from ".";
 import { Table } from "@chakra-ui/react";
 import { PROJECT_ITEM } from "@/mocks/table";
+import { HEADER_TABLE } from "@/constants";
 
 const meta = {
   title: "Example/TableRow",
@@ -26,7 +27,7 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     project: PROJECT_ITEM,
-    columns: [],
+    columns: HEADER_TABLE,
   },
   render: (args) => {
     return (
