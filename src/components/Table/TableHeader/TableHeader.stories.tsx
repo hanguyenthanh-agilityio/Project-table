@@ -35,6 +35,9 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     headerList: HEADER_TABLE,
+    onSort: () => {},
+    sortDirection: "asc",
+    sortColumn: "",
   },
   render: (args) => {
     return (
