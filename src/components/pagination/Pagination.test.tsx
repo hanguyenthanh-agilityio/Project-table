@@ -9,6 +9,10 @@ describe("Pagination component", () => {
     onClickPrevious: jest.fn(),
     onClickNext: jest.fn(),
     disable: true,
+    totalPages: 45 / 10,
+    startIndex: 1,
+    endIndex: 10,
+    totalItem: 45,
   };
 
   const pagination = () => {
