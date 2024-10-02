@@ -18,7 +18,7 @@ interface PaginationProps {
   totalItem: number;
 }
 
-const Pagination = memo<PaginationProps>(
+const Pagination = memo(
   ({
     projects,
     onClickPrevious,
