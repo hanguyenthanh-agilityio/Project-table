@@ -43,3 +43,33 @@ export const useAddProjectMutation = () => {
     },
   });
 };
+
+// Edit project
+export const useEditProjectMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: Project) =>
+      await axiosClient.put<Project>(`projects/${payload.id}`, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: "projects",
+      });
+    },
+  });
+};
+
+// Delete Project
+export const useDeleteProjectMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: string) =>
+      await axiosClient.delete(`projects/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: "projects",
+      });
+    },
+  });
+};

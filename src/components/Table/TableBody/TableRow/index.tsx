@@ -1,7 +1,7 @@
-import { lazy, memo, Suspense } from "react";
+import { lazy, memo, Suspense, useCallback } from "react";
 
 // Chakra UI
-import { Avatar, Flex, Td, useDisclosure } from "@chakra-ui/react";
+import { Avatar, Flex, Td, useDisclosure, useToast } from "@chakra-ui/react";
 
 // Types
 import { DropdownItemType, Project } from "@/types";
@@ -13,6 +13,11 @@ const FormModal = lazy(() => import("@/components/FormModal"));
 
 // Utils
 import { formatDate, formatTimeline } from "@/utils";
+import {
+  useDeleteProjectMutation,
+  useEditProjectMutation,
+} from "@/hooks/useProject";
+import { AxiosError } from "axios";
 
 interface TableRowPops {
   project: Project;
@@ -42,6 +47,8 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
     onClose: onCloseDelete,
   } = useDisclosure();
 
+  const toast = useToast();
+
   const actionMenu: DropdownItemType[] = [
     {
       name: "Edit",
@@ -53,8 +60,59 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
     },
   ];
 
-  const handleEdit = () => {};
-  const handleDelete = () => {};
+  const { mutate: ediProject, isLoading: isLoadingEdit } =
+    useEditProjectMutation();
+  const { mutate: deleteProject, isLoading: isLoadingDelete } =
+    useDeleteProjectMutation();
+
+  const handleError = useCallback((error: string) => {
+    toast({
+      title: error,
+      status: "error",
+      isClosable: true,
+    });
+  }, []);
+
+  // Show message when update success
+  const handleEditSuccess = useCallback(() => {
+    onCloseEdit();
+    toast({
+      title: "Project updated.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  }, []);
+  //Handle update Project
+  const handleEdit = useCallback((data: Project) => {
+    if (project.id) {
+      ediProject(data, {
+        onSuccess: handleEditSuccess,
+        onError: (error) => handleError((error as AxiosError).message),
+      });
+    }
+  }, []);
+
+  // Show message when delete success
+  const handleDeleteSuccess = useCallback(() => {
+    onCloseDelete();
+    toast({
+      title: "Project deleted.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  }, []);
+
+  //Handle delete Project
+  const handleDelete = useCallback(() => {
+    if (project.id) {
+      deleteProject(project.id.toString(), {
+        onSuccess: handleDeleteSuccess,
+        onError: (error) => handleError((error as AxiosError).message),
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -110,6 +168,8 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
               buttonLabel="Confirm"
               onClose={onCloseEdit}
               onConfirm={handleEdit}
+              projectItem={project}
+              isLoading={isLoadingEdit}
             />
           )}
           {isOpenDelete && (
@@ -119,6 +179,7 @@ const TableRow = memo<TableRowPops>(({ project }: TableRowPops) => {
               isOpen={isOpenDelete}
               onClose={onCloseDelete}
               onDelete={handleDelete}
+              isLoading={isLoadingDelete}
             />
           )}
         </Suspense>

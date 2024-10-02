@@ -80,8 +80,8 @@ const FormModal = memo<FormModalProps>(
             {/* Project manager (PM) */}
             <FormInput
               label="Project manager (PM)"
-              isInvalid={!!errors.projectManager}
-              inputName="projectManager"
+              isInvalid={!!errors.avatar}
+              inputName="avatar"
               register={register}
               type="string"
             />
