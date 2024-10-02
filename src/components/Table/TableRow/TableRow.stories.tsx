@@ -1,38 +1,37 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 // Components
-import TableBody from ".";
+import TableRow from ".";
 import { Table } from "@chakra-ui/react";
-import { PROJECT_LIST } from "@/mocks/table";
-import { HEADER_TABLE } from "@/constants";
+import { PROJECT_ITEM } from "@/mocks/table";
 
 const meta = {
-  title: "Example/TableBody",
-  component: TableBody,
+  title: "Example/TableRow",
+  component: TableRow,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
   argTypes: {
-    projects: {
-      description: "The projects for table",
+    project: {
+      description: "The project for table",
       control: { type: "text" },
     },
   },
-} satisfies Meta<typeof TableBody>;
+} satisfies Meta<typeof TableRow>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    projects: PROJECT_LIST,
-    columns: HEADER_TABLE,
+    project: PROJECT_ITEM,
+    columns: [],
   },
   render: (args) => {
     return (
       <Table>
-        <TableBody {...args} />
+        <TableRow {...args} />
       </Table>
     );
   },
