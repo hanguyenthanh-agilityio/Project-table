@@ -16,8 +16,8 @@ interface CommonTableRowProps {
 const CommonTableRow = memo<CommonTableRowProps>(({ project, columns }) => {
   return (
     <>
-      {columns.map(({ key, customCell }, index) => (
-        <Td key={index}>
+      {columns.map(({ key, customCell }) => (
+        <Td key={key}>
           {customCell ? customCell(project) : project[key as keyof Project]}
         </Td>
       ))}

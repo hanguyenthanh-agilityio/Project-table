@@ -1,4 +1,4 @@
-import { Avatar, Flex } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Image, Text } from "@chakra-ui/react";
 
 // utils
 import { formatDate, formatTimeline } from "@/utils";
@@ -9,8 +9,43 @@ import { Project } from "@/types";
 // Components
 import { ActionCell } from "@/components";
 
+// Images
+import notes from "../../public/notes.svg";
+
+const statusStyle = (status: string) => {
+  switch (status) {
+    case "On track":
+      return {
+        bg: "#e1fcef",
+        color: "#14804a",
+        boxBg: "#38a06c",
+      };
+    case "At risk":
+      return {
+        bg: "#ffedef",
+        color: "#d1293d",
+        boxBg: "#ef5466",
+      };
+    case "On hold":
+      return {
+        bg: "#e9edf5",
+        color: "#5a6376",
+        boxBg: "#687182",
+      };
+    case "Potential risk":
+      return {
+        bg: "#fcf2e6",
+        color: "#aa5b00",
+        boxBg: "#c97a20",
+      };
+    default:
+      return {};
+  }
+};
+
 export const tableColumns = () => {
   return [
+    { key: "id", title: "#" },
     { key: "projectName", title: "Project Name" },
     {
       key: "avatar",
@@ -26,26 +61,51 @@ export const tableColumns = () => {
     {
       key: "status",
       title: "Status",
+      customCell: (project: Project) => {
+        const { bg, color, boxBg } = statusStyle(project.status);
+        return (
+          <Flex
+            alignItems="center"
+            justifyContent="center"
+            gap="2"
+            bg={bg}
+            maxW="120px"
+            borderRadius="4px"
+            color={color}
+            padding="2px"
+          >
+            <Box w="6px" h="6px" bg={boxBg} borderRadius="2px" />
+            {project.status}
+          </Flex>
+        );
+      },
     },
     {
       key: "latestUpdate",
       title: "Latest Update",
-      customCell: (project: Project) => formatDate(project.latestUpdate),
+      customCell: (project: Project) => (
+        <Flex alignItems="center">
+          <Image src={notes} pr="5px" />
+          {formatDate(project.latestUpdate)}
+        </Flex>
+      ),
     },
     {
       key: "resources",
       title: "Resources",
       customCell: (project: Project) => (
         <Flex
-          bg="background.primary"
+          bg={project.resources ? "background.primary" : "#ededfc"}
           w="24px"
           h="24px"
           color="text.secondary"
           alignItems="center"
           justifyContent="center"
           borderRadius="6px"
+          border={project.resources ? "none" : "1px dashed #807cea"}
+          fontSize={project.resources ? "" : "20px"}
         >
-          {project.resources}
+          {project.resources ? project.resources : "+"}
         </Flex>
       ),
     },
@@ -62,7 +122,7 @@ export const tableColumns = () => {
             minW="100px"
             justifyContent="center"
           >
-            {formatTimeline(project.createdAt)}
+            {project.createdAt ? formatTimeline(project.createdAt) : "-"}
           </Flex>
           {">"}
           <Flex
@@ -73,7 +133,7 @@ export const tableColumns = () => {
             minW="100px"
             justifyContent="center"
           >
-            {formatTimeline(project.finishAt)}
+            {project.createdAt ? formatTimeline(project.finishAt) : "-"}
           </Flex>
         </Flex>
       ),
@@ -81,7 +141,9 @@ export const tableColumns = () => {
     {
       key: "estimation",
       title: "Estimation",
-      customCell: (project: Project) => `US$ ${project.estimation}`,
+      customCell: (project: Project) => (
+        <Text>{project.estimation ? `US$ ${project.estimation}k` : "-"}</Text>
+      ),
     },
     {
       key: "action",

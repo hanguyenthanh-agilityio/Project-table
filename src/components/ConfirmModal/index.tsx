@@ -14,14 +14,7 @@ interface ConfirmModalProps {
 }
 
 const ConfirmModal = memo<ConfirmModalProps>(
-  ({
-    description,
-    buttonLabel,
-    isOpen,
-    onClose,
-    onDelete,
-    isLoading,
-  }: ConfirmModalProps) => (
+  ({ description, buttonLabel, isOpen, onClose, onDelete, isLoading }) => (
     <Modal
       modalTitle="Delete project"
       buttonAction={buttonLabel}

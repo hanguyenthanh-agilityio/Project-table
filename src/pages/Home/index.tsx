@@ -14,6 +14,7 @@ import { useAddProjectMutation, useProjectList } from "@/hooks/useProject";
 
 // Types
 import { Params, Project } from "@/types";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -51,6 +52,8 @@ const Home = () => {
     },
     [filter],
   );
+
+  const optimizeFn = useCallback(useDebounce(handleChangeSearch), []);
 
   // Show message when create success and close modal
   const handleConfirmSuccess = useCallback(() => {
@@ -91,7 +94,7 @@ const Home = () => {
           <Suspense fallback={<LoadingIndicator />}>
             <FilterBar
               isLoading={isLoadingAdd}
-              onChangeSearch={handleChangeSearch}
+              onChangeSearch={optimizeFn}
               onConfirm={handleConfirm}
               isOpen={isOpen}
               onClickAdd={onOpen}

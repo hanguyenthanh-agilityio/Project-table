@@ -16,7 +16,7 @@ interface TableProp {
   projects: Project[];
 }
 
-const Table = memo<TableProp>(({ headerList, projects }: TableProp) => {
+const Table = memo<TableProp>(({ headerList, projects }) => {
   // Get columns from utils
   const columns = tableColumns();
 
