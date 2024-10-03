@@ -16,3 +16,4 @@ export { default as Sidebar } from "./Sidebar";
 export { default as LoadingIndicator } from "./LoadingIndicator";
 export { default as DateRangePicker } from "./DateRangePicker";
 export { default as ActionCell } from "./Table/TableAction";
+export { default as Pagination } from "./Pagination";
