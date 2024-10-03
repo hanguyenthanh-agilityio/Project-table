@@ -79,6 +79,19 @@ const Modal = memo<ModalProps>(
               variant={isConfirmModal ? "delete" : "primary"}
               isLoading={isLoading}
               onClick={onClick}
+              sx={
+                isConfirmModal
+                  ? {
+                      "&:hover:disabled": {
+                        background: "background.red",
+                      },
+                    }
+                  : {
+                      "&:hover:disabled": {
+                        background: "background.purple",
+                      },
+                    }
+              }
             >
               {buttonAction}
             </Button>

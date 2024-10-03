@@ -4,7 +4,7 @@ export type Project = {
   avatar: string;
   status: string;
   latestUpdate: string;
-  resources: number;
+  resources?: number;
   createdAt?: string;
   finishAt?: string;
   estimation: string;

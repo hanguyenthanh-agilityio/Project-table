@@ -1,13 +1,10 @@
-import { Flex, useDisclosure, useToast } from "@chakra-ui/react";
-import { useCallback, useState } from "react";
+import { Flex, Text, useDisclosure, useToast } from "@chakra-ui/react";
+import { lazy, Suspense, useCallback, useState } from "react";
 // Components
-import {
-  Table,
-  FilterBar,
-  Sidebar,
-  LoadingIndicator,
-  Pagination,
-} from "@/components";
+import { Sidebar, LoadingIndicator } from "@/components";
+const FilterBar = lazy(() => import("@/components/FilterBar"));
+const Pagination = lazy(() => import("@/components/Pagination"));
+const Table = lazy(() => import("@/components/Table"));
 
 // Constants
 import { HEADER_TABLE } from "@/constants";
@@ -17,6 +14,7 @@ import { useAddProjectMutation, useProjectList } from "@/hooks/useProject";
 
 // Types
 import { Params, Project } from "@/types";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -48,9 +46,14 @@ const Home = () => {
     useAddProjectMutation();
 
   // Handle Search project
-  const handleChangeSearch = useCallback((projectName: string) => {
-    setFilter({ ...filter, projectName });
-  }, []);
+  const handleChangeSearch = useCallback(
+    (projectName: string) => {
+      setFilter({ ...filter, projectName });
+    },
+    [filter],
+  );
+
+  const optimizeFn = useCallback(useDebounce(handleChangeSearch), []);
 
   // Show message when create success and close modal
   const handleConfirmSuccess = useCallback(() => {
@@ -64,20 +67,23 @@ const Home = () => {
   }, [onClose, toast]);
 
   // Handle Confirm add new project
-  const handleConfirm = useCallback((data: Project) => {
-    addProject(data, {
-      onSuccess: handleConfirmSuccess,
-    });
-  }, []);
+  const handleConfirm = useCallback(
+    (data: Project) => {
+      addProject(data, {
+        onSuccess: handleConfirmSuccess,
+      });
+    },
+    [addProject, handleConfirmSuccess],
+  );
 
   // Handle pagination
-  const handleClickNext = () => {
+  const handleClickNext = useCallback(() => {
     setFilter({ ...filter, page: Number(filter.page) + 1 });
-  };
+  }, [filter]);
 
-  const handleClickPrevious = () => {
+  const handleClickPrevious = useCallback(() => {
     setFilter({ ...filter, page: Number(filter.page) - 1 });
-  };
+  }, [filter]);
 
   const totalPages = Math.ceil(45 / filter.limit);
 
@@ -85,29 +91,38 @@ const Home = () => {
     <>
       <Sidebar>
         <Flex flexDir="column">
-          <FilterBar
-            isLoading={isLoadingAdd}
-            onChangeSearch={handleChangeSearch}
-            onConfirm={handleConfirm}
-            isOpen={isOpen}
-            onClickAdd={onOpen}
-            onClose={onClose}
-          />
+          <Suspense fallback={<LoadingIndicator />}>
+            <FilterBar
+              isLoading={isLoadingAdd}
+              onChangeSearch={optimizeFn}
+              onConfirm={handleConfirm}
+              isOpen={isOpen}
+              onClickAdd={onOpen}
+              onClose={onClose}
+            />
+          </Suspense>
+
           {isLoading ? (
             <LoadingIndicator />
+          ) : projects?.length === 0 ? (
+            <Text>No projects found</Text>
           ) : (
-            <Table headerList={HEADER_TABLE} projects={projects} />
+            <Suspense fallback={<LoadingIndicator />}>
+              <Table headerList={HEADER_TABLE} projects={projects} />
+            </Suspense>
           )}
-          <Pagination
-            projects={projects}
-            disable={filter.page === 1}
-            onClickPrevious={handleClickPrevious}
-            onClickNext={handleClickNext}
-            startIndex={filter.page}
-            totalPages={totalPages}
-            endIndex={filter.limit}
-            totalItem={45}
-          />
+          <Suspense fallback={<LoadingIndicator />}>
+            <Pagination
+              projects={projects}
+              disable={filter.page === 1}
+              onClickPrevious={handleClickPrevious}
+              onClickNext={handleClickNext}
+              startIndex={filter.page}
+              totalPages={totalPages}
+              endIndex={filter.limit}
+              totalItem={45}
+            />
+          </Suspense>
         </Flex>
       </Sidebar>
     </>

@@ -1,6 +1,7 @@
 import { HeaderList } from "@/types";
 
 export const HEADER_TABLE: HeaderList[] = [
+  { title: "#", key: "id" },
   { title: "Project Name", key: "projectName" },
   { title: "PM", key: "pm" },
   { title: "Status", key: "status" },

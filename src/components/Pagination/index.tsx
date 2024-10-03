@@ -28,7 +28,7 @@ const Pagination = memo<PaginationProps>(
     endIndex,
     totalItem,
     totalPages,
-  }: PaginationProps) => (
+  }) => (
     <Flex flexDir="row" justifyContent="space-between" alignItems="center">
       <Text p="20px 0 50px 20px" color="text.secondary">
         {startIndex}-{endIndex} of {totalItem}

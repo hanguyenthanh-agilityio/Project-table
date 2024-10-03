@@ -52,6 +52,14 @@ const Input = memo<SearchInputProps>(
       </InputGroup>
     );
   },
+
+  (prevProps, nextProps) => {
+    // Prevent re-renders if value and onChange are the same
+    return (
+      prevProps.value === nextProps.value &&
+      prevProps.onChange === nextProps.onChange
+    );
+  },
 );
 
 export default Input;

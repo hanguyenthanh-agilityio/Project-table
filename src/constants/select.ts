@@ -5,3 +5,10 @@ export const OPTION_SELECT = [
     value: "detail",
   },
 ];
+
+export const SELECT_STATUS = [
+  { label: "On track", value: "On track" },
+  { label: "At risk", value: "At risk" },
+  { label: "On hold", value: "On hold" },
+  { label: "Potential risk", value: "Potential risk" },
+];

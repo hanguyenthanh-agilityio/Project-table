@@ -9,14 +9,17 @@ import { Table as TableChakra, TableContainer } from "@chakra-ui/react";
 import { HeaderList, Project } from "@/types";
 
 // Utils
-import { sortByColumn } from "@/utils";
+import { sortByColumn, tableColumns } from "@/utils";
 
 interface TableProp {
   headerList: HeaderList[];
   projects: Project[];
 }
 
-const Table = memo<TableProp>(({ headerList, projects }: TableProp) => {
+const Table = memo<TableProp>(({ headerList, projects }) => {
+  // Get columns from utils
+  const columns = tableColumns();
+
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
@@ -44,7 +47,7 @@ const Table = memo<TableProp>(({ headerList, projects }: TableProp) => {
           sortColumn={sortColumn}
           sortDirection={sortDirection}
         />
-        <TableBody projects={sortedProjects} />
+        <TableBody projects={sortedProjects} columns={columns} />
       </TableChakra>
     </TableContainer>
   );

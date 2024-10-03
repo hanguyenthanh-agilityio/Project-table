@@ -1,10 +1,11 @@
 import { BellIcon, QuestionOutlineIcon } from "@chakra-ui/icons";
 import { Avatar, Flex, Heading } from "@chakra-ui/react";
+import { memo } from "react";
 
 interface HeaderProps {
   title: string;
 }
-const Header = ({ title }: HeaderProps) => (
+const Header = memo(({ title }: HeaderProps) => (
   <Flex
     justifyContent="space-between"
     alignItems="center"
@@ -23,6 +24,6 @@ const Header = ({ title }: HeaderProps) => (
       />
     </Flex>
   </Flex>
-);
+));
 
 export default Header;
