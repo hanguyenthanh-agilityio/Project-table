@@ -2,11 +2,12 @@ import { memo, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 
 // Components
-import { Modal, FormInput, DateRangePicker } from "@/components";
-import { Flex, FormLabel, SimpleGrid } from "@chakra-ui/react";
+import { Modal, FormInput, DateRangePicker, Select } from "@/components";
+import { Flex, FormControl, FormLabel, SimpleGrid } from "@chakra-ui/react";
 
 // Types
 import { Project } from "@/types";
+import { SELECT_STATUS } from "@/constants";
 
 interface FormModalProps {
   modalTitle: string;
@@ -72,6 +73,7 @@ const FormModal = memo<FormModalProps>(
             {/* Project Name */}
             <FormInput
               label="Project Name"
+              isRequired={true}
               isInvalid={!!errors.projectName}
               inputName="projectName"
               register={register}
@@ -80,15 +82,26 @@ const FormModal = memo<FormModalProps>(
             {/* Project manager (PM) */}
             <FormInput
               label="Project manager (PM)"
-              isInvalid={!!errors.projectManager}
-              inputName="projectManager"
+              isInvalid={!!errors.avatar}
+              inputName="avatar"
               register={register}
               type="string"
             />
+            {/* Status */}
+            <FormControl mb="15px" isInvalid={!!errors.status}>
+              <FormLabel>Status</FormLabel>
+              <Controller
+                name="status"
+                control={control}
+                render={({ field }) => (
+                  <Select options={SELECT_STATUS} {...field} />
+                )}
+              />
+            </FormControl>
             {/* Resources */}
             <FormInput
               label="Resources"
-              isInvalid={!!errors.resources}
+              // isInvalid={!!errors.resources}
               inputName="resources"
               register={register}
               type="string"
@@ -153,7 +166,7 @@ const FormModal = memo<FormModalProps>(
             {/* Estimation */}
             <FormInput
               label="Estimation"
-              isInvalid={!!errors.estimation}
+              // isInvalid={!!errors.estimation}
               inputName="estimation"
               register={register}
               type="string"

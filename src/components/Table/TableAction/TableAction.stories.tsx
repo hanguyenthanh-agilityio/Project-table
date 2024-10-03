@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 // Components
-import TableRow from ".";
+
 import { Table } from "@chakra-ui/react";
 import { PROJECT_ITEM } from "@/mocks/table";
+import ActionCell from ".";
 
 const meta = {
-  title: "Example/TableRow",
-  component: TableRow,
+  title: "Example/TableAction",
+  component: ActionCell,
   parameters: {
     layout: "centered",
   },
@@ -18,7 +19,7 @@ const meta = {
       control: { type: "text" },
     },
   },
-} satisfies Meta<typeof TableRow>;
+} satisfies Meta<typeof ActionCell>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -30,7 +31,7 @@ export const Primary: Story = {
   render: (args) => {
     return (
       <Table>
-        <TableRow {...args} />
+        <ActionCell {...args} />
       </Table>
     );
   },

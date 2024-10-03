@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { ChangeEvent, memo } from "react";
 
 // Chakra UI
 import {
@@ -11,13 +11,16 @@ import { SearchIcon } from "@chakra-ui/icons";
 
 interface SearchInputProps {
   placeholder?: string;
-  onChange?: () => void;
+  onChange: (value: string) => void;
   onKeyDown?: () => void;
   value?: string;
 }
 
 const Input = memo<SearchInputProps>(
   ({ placeholder, onChange, onKeyDown, value }: SearchInputProps) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
+      onChange(event.target.value);
+
     return (
       <InputGroup maxW={{ xs: "100%", lg: "300px" }}>
         <InputChakra
@@ -28,7 +31,7 @@ const Input = memo<SearchInputProps>(
           name="input"
           data-testid="input-field"
           placeholder={placeholder}
-          onChange={onChange}
+          onChange={handleChange}
           onKeyDown={onKeyDown}
           value={value}
         />
@@ -47,6 +50,14 @@ const Input = memo<SearchInputProps>(
           }
         />
       </InputGroup>
+    );
+  },
+
+  (prevProps, nextProps) => {
+    // Prevent re-renders if value and onChange are the same
+    return (
+      prevProps.value === nextProps.value &&
+      prevProps.onChange === nextProps.onChange
     );
   },
 );

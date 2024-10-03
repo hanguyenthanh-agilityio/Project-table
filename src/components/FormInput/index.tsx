@@ -9,7 +9,7 @@ import { memo } from "react";
 import { UseFormRegister } from "react-hook-form";
 
 interface FormInputProps {
-  isInvalid: boolean;
+  isInvalid?: boolean;
   label: string;
   inputName: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,6 +17,7 @@ interface FormInputProps {
   type: string;
   defaultValue?: string;
   placeholder?: string;
+  isRequired?: boolean;
 }
 
 const FormInput = memo<FormInputProps>(
@@ -28,11 +29,12 @@ const FormInput = memo<FormInputProps>(
     type,
     defaultValue,
     placeholder,
+    isRequired = false,
   }: FormInputProps) => {
     return (
       <FormControl mb="15px" isInvalid={isInvalid}>
         <FormLabel mb="5px" fontSize="14px">
-          {label}
+          {label} {isRequired && <span style={{ color: "#5e5adb" }}>*</span>}
         </FormLabel>
         <Input
           placeholder={placeholder}

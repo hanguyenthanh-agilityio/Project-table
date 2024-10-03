@@ -10,7 +10,7 @@ interface SidebarProp {
   children: React.ReactNode;
 }
 
-const Sidebar = memo<SidebarProp>(({ children }: SidebarProp) => {
+const Sidebar = memo(({ children }: SidebarProp) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (

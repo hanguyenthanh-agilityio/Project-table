@@ -14,7 +14,7 @@ interface FilterBarProps {
   isOpen: boolean;
   onClickAdd: () => void;
   onClose: () => void;
-  onChangeSearch: () => void;
+  onChangeSearch: (value: string) => void;
   onConfirm: (data: Project) => void;
 }
 const FilterBar = memo<FilterBarProps>(

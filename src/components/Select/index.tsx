@@ -23,12 +23,12 @@ const Select = memo<SelectProps>(
     return (
       <SelectChakra
         maxW={{ xs: "180px", lg: "210px" }}
-        bg="#fff"
         placeholder={placeholder}
         name="select-base"
         cursor="pointer"
         iconColor="text.helper"
         data-testid="select-base"
+        border="1.5px solid #d3d5d7"
         onBlur={onBlur}
         onChange={onChange}
         value={value}
