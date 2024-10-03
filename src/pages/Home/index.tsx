@@ -3,7 +3,7 @@ import { lazy, Suspense, useCallback, useState } from "react";
 // Components
 import { Sidebar, LoadingIndicator } from "@/components";
 const FilterBar = lazy(() => import("@/components/FilterBar"));
-// const Pagination = lazy(() => import("@/components/Pagination"));
+const Pagination = lazy(() => import("@/components/Pagination"));
 const Table = lazy(() => import("@/components/Table"));
 
 // Constants
@@ -77,15 +77,15 @@ const Home = () => {
   );
 
   // Handle pagination
-  // const handleClickNext = useCallback(() => {
-  //   setFilter({ ...filter, page: Number(filter.page) + 1 });
-  // }, [filter]);
+  const handleClickNext = useCallback(() => {
+    setFilter({ ...filter, page: Number(filter.page) + 1 });
+  }, [filter]);
 
-  // const handleClickPrevious = useCallback(() => {
-  //   setFilter({ ...filter, page: Number(filter.page) - 1 });
-  // }, [filter]);
+  const handleClickPrevious = useCallback(() => {
+    setFilter({ ...filter, page: Number(filter.page) - 1 });
+  }, [filter]);
 
-  // const totalPages = Math.ceil(45 / filter.limit);
+  const totalPages = Math.ceil(45 / filter.limit);
 
   return (
     <>
@@ -111,7 +111,7 @@ const Home = () => {
               <Table headerList={HEADER_TABLE} projects={projects} />
             </Suspense>
           )}
-          {/* <Suspense fallback={<LoadingIndicator />}>
+          <Suspense fallback={<LoadingIndicator />}>
             <Pagination
               projects={projects}
               disable={filter.page === 1}
@@ -122,7 +122,7 @@ const Home = () => {
               endIndex={filter.limit}
               totalItem={45}
             />
-          </Suspense> */}
+          </Suspense>
         </Flex>
       </Sidebar>
     </>
