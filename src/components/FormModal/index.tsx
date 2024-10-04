@@ -33,28 +33,41 @@ const FormModal = memo<FormModalProps>(
       formState: { errors },
       handleSubmit,
       control,
-      // setError,
-      // clearErrors,
+      watch,
+      setError,
+      clearErrors,
     } = useForm<Project>({
       defaultValues: projectItem,
     });
 
-    const onSubmit: SubmitHandler<Project> = (data) => onConfirm(data);
+    // Watch the start and end dates
+    const createdAt = watch("createdAt");
+    const finishAt = watch("finishAt");
 
+    // Handler for form submission
+    const onSubmit: SubmitHandler<Project> = (data) => {
+      // Validate if start date is greater than end date
+      if (createdAt && finishAt && new Date(createdAt) > new Date(finishAt)) {
+        setError("finishAt", {
+          type: "manual",
+          message: "End date must be greater than start date.",
+        });
+        return; // Prevent form submission
+      }
+      onConfirm(data); // Call the onConfirm callback if validation passes
+    };
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
 
     const handleChangeStartDate = (date: Date | null) => {
       setStartDate(date);
-      // if (endDate && date && date > endDate) {
-      //   setError("finishAt", {
-      //     message: "Start date should not be greater than end date",
-      //   });
-      // } else {
-      //   clearErrors("finishAt");
-      // }
+      clearErrors("createdAt"); // Clear any previous errors
     };
-    const handleChangeEndDate = (date: Date | null) => setEndDate(date);
+
+    const handleChangeEndDate = (date: Date | null) => {
+      setEndDate(date);
+      clearErrors("finishAt"); // Clear any previous errors
+    };
 
     return (
       <Modal
@@ -74,6 +87,7 @@ const FormModal = memo<FormModalProps>(
             <FormInput
               label="Project Name"
               isRequired={true}
+              required={true}
               isInvalid={!!errors.projectName}
               inputName="projectName"
               register={register}
@@ -82,13 +96,12 @@ const FormModal = memo<FormModalProps>(
             {/* Project manager (PM) */}
             <FormInput
               label="Project manager (PM)"
-              isInvalid={!!errors.avatar}
               inputName="avatar"
               register={register}
               type="string"
             />
             {/* Status */}
-            <FormControl mb="15px" isInvalid={!!errors.status}>
+            <FormControl mb="15px">
               <FormLabel>Status</FormLabel>
               <Controller
                 name="status"
@@ -101,7 +114,6 @@ const FormModal = memo<FormModalProps>(
             {/* Resources */}
             <FormInput
               label="Resources"
-              // isInvalid={!!errors.resources}
               inputName="resources"
               register={register}
               type="string"
@@ -119,7 +131,6 @@ const FormModal = memo<FormModalProps>(
                 <Controller
                   name="createdAt"
                   control={control}
-                  // rules={{ required: ERROR_MESSAGES.FIELD_REQUIRED }}
                   render={(props) => (
                     <DateRangePicker
                       label="From"
@@ -131,11 +142,6 @@ const FormModal = memo<FormModalProps>(
                     />
                   )}
                 />
-                {/* {errors.createdAt && (
-                  <Text color="red.500" fontSize="sm">
-                    {errors.createdAt.message}
-                  </Text>
-                )} */}
               </Flex>
 
               {/* End date */}
@@ -143,7 +149,6 @@ const FormModal = memo<FormModalProps>(
                 <Controller
                   name="finishAt"
                   control={control}
-                  // rules={{ required: ERROR_MESSAGES.FIELD_REQUIRED }}
                   render={(props) => (
                     <DateRangePicker
                       label="To"
@@ -156,17 +161,11 @@ const FormModal = memo<FormModalProps>(
                     />
                   )}
                 />
-                {/* {errors.finishAt && (
-                  <Text color="red.500" fontSize="sm">
-                    {errors.finishAt.message}
-                  </Text>
-                )} */}
               </Flex>
             </Flex>
             {/* Estimation */}
             <FormInput
               label="Estimation"
-              // isInvalid={!!errors.estimation}
               inputName="estimation"
               register={register}
               type="string"

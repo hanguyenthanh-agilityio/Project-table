@@ -18,6 +18,7 @@ interface FormInputProps {
   defaultValue?: string;
   placeholder?: string;
   isRequired?: boolean;
+  required?: boolean;
 }
 
 const FormInput = memo<FormInputProps>(
@@ -30,6 +31,7 @@ const FormInput = memo<FormInputProps>(
     defaultValue,
     placeholder,
     isRequired = false,
+    required = false,
   }: FormInputProps) => {
     return (
       <FormControl mb="15px" isInvalid={isInvalid}>
@@ -40,7 +42,7 @@ const FormInput = memo<FormInputProps>(
           placeholder={placeholder}
           defaultValue={defaultValue}
           type={type}
-          {...register(inputName, { required: true })}
+          {...register(inputName, { required: required })}
         />
         <FormErrorMessage>
           {isInvalid && ERROR_MESSAGES.FIELD_REQUIRED}

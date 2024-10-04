@@ -10,7 +10,7 @@ import { Project } from "@/types";
 import { ActionCell } from "@/components";
 
 // Images
-import notes from "../../public/notes.svg";
+import notes from "@/notes.svg";
 
 const statusStyle = (status: string) => {
   switch (status) {

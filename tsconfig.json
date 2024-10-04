@@ -23,7 +23,7 @@
     //absolute import
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*", "./public/*"]
     }
   },
   "include": ["src", "./jest.setup.ts"],

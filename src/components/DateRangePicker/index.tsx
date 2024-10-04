@@ -4,7 +4,7 @@ import { memo } from "react";
 
 // CSS
 import "./date-picker.css";
-import { Text } from "@chakra-ui/react";
+import { FormErrorMessage, Text } from "@chakra-ui/react";
 
 interface DateProps {
   label: string;
@@ -13,6 +13,7 @@ interface DateProps {
   endDate?: Date | null;
   startDate?: Date | null;
   onChange: (date: Date | null) => void;
+  errorMessage?: string;
 }
 
 const DateRangePicker = memo<DateProps>(
@@ -23,6 +24,7 @@ const DateRangePicker = memo<DateProps>(
     endDate,
     startDate,
     onChange,
+    errorMessage,
     ...props
   }: DateProps) => (
     <>
@@ -38,6 +40,7 @@ const DateRangePicker = memo<DateProps>(
         selectsStart
         {...props}
       />
+      {errorMessage && <FormErrorMessage>{errorMessage}</FormErrorMessage>}
     </>
   ),
 );
