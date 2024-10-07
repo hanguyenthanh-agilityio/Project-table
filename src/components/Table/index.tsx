@@ -1,5 +1,4 @@
-import { useState, useCallback, Suspense, lazy } from "react";
-import { memo } from "react";
+import { useState, useCallback, Suspense, lazy, useMemo, memo } from "react";
 
 // Components
 import { TableHeader, TableBody, LoadingIndicator } from "@/components";
@@ -22,7 +21,7 @@ interface TableProp {
   headerList: HeaderList[];
 }
 
-const Table = memo<TableProp>(({ headerList }) => {
+const Table = memo(({ headerList }: TableProp) => {
   const toast = useToast();
 
   const initialFilters = {
@@ -54,8 +53,10 @@ const Table = memo<TableProp>(({ headerList }) => {
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
   // Handle sort by column
-  const sortedProjects = sortByColumn(projects, sortColumn, sortDirection);
-
+  const sortedProjects = useMemo(
+    () => sortByColumn(projects, sortColumn, sortDirection),
+    [projects, sortColumn, sortDirection],
+  );
   const handleSort = useCallback(
     (column: string) => {
       if (sortColumn === column) {
@@ -112,5 +113,12 @@ const Table = memo<TableProp>(({ headerList }) => {
     </>
   );
 });
+
+(prevProps: TableProp, nextProps: TableProp) => {
+  return (
+    JSON.stringify(prevProps.headerList) ===
+    JSON.stringify(nextProps.headerList)
+  );
+};
 
 export default Table;

@@ -1,4 +1,4 @@
-import { lazy, memo, Suspense } from "react";
+import { lazy, memo, Suspense, useCallback } from "react";
 
 // Chakra UI
 import { Button, Flex, useDisclosure } from "@chakra-ui/react";
@@ -17,7 +17,10 @@ interface FilterBarProps {
 const FilterBar = memo(
   ({ isLoading, onChangeSearch, onConfirm }: FilterBarProps) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    console.log("re - render");
+
+    const handleClose = useCallback(() => {
+      onClose();
+    }, [onClose]);
 
     return (
       <Flex justifyContent="space-between" alignItems="center" p="20px">
@@ -36,7 +39,7 @@ const FilterBar = memo(
             <FormModal
               modalTitle="Add new project"
               buttonLabel="Add project"
-              onClose={onClose}
+              onClose={handleClose}
               onConfirm={onConfirm}
               isLoading={isLoading}
             />
@@ -46,13 +49,5 @@ const FilterBar = memo(
     );
   },
 );
-
-(prevProps: FilterBarProps, nextProps: FilterBarProps) => {
-  return (
-    prevProps.isLoading === nextProps.isLoading &&
-    prevProps.onChangeSearch === nextProps.onChangeSearch &&
-    prevProps.onConfirm === nextProps.onConfirm
-  );
-};
 
 export default FilterBar;

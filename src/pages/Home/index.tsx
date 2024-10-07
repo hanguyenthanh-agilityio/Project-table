@@ -25,20 +25,18 @@ const Home = () => {
     limit: 10,
   };
 
-  const [, setFilter] = useState<Params>(initialFilters);
+  const [filter, setFilter] = useState<Params>(initialFilters);
 
   const { mutate: addProject, isLoading: isLoadingAdd } =
     useAddProjectMutation();
 
   // Handle Search project
-  const handleChangeSearch = useCallback((projectName: string) => {
-    setFilter((prev) => {
-      if (prev.projectName !== projectName) {
-        return { ...prev, projectName };
-      }
-      return prev;
-    });
-  }, []);
+  const handleChangeSearch = useCallback(
+    (projectName: string) => {
+      setFilter({ ...filter, projectName });
+    },
+    [filter],
+  );
 
   const optimizeFn = useCallback(useDebounce(handleChangeSearch), []);
 
@@ -73,8 +71,8 @@ const Home = () => {
               onChangeSearch={optimizeFn}
               onConfirm={handleConfirm}
             />
+            <Table headerList={HEADER_TABLE} />
           </Suspense>
-          <Table headerList={HEADER_TABLE} />
         </Flex>
       </Sidebar>
     </>
