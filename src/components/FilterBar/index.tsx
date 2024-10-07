@@ -1,7 +1,7 @@
-import { lazy, memo, Suspense } from "react";
+import { lazy, memo, Suspense, useCallback } from "react";
 
 // Chakra UI
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, useDisclosure } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
 // Components
@@ -11,21 +11,17 @@ const FormModal = lazy(() => import("@/components/FormModal"));
 
 interface FilterBarProps {
   isLoading: boolean;
-  isOpen: boolean;
-  onClickAdd: () => void;
-  onClose: () => void;
   onChangeSearch: (value: string) => void;
   onConfirm: (data: Project) => void;
 }
-const FilterBar = memo<FilterBarProps>(
-  ({
-    isLoading,
-    isOpen,
-    onClickAdd,
-    onClose,
-    onChangeSearch,
-    onConfirm,
-  }: FilterBarProps) => {
+const FilterBar = memo(
+  ({ isLoading, onChangeSearch, onConfirm }: FilterBarProps) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const handleClose = useCallback(() => {
+      onClose();
+    }, [onClose]);
+
     return (
       <Flex justifyContent="space-between" alignItems="center" p="20px">
         <Flex w="400px">
@@ -34,7 +30,7 @@ const FilterBar = memo<FilterBarProps>(
         <Button
           variant="primary"
           leftIcon={<AddIcon w="12px" h="12px" mr="5px" />}
-          onClick={onClickAdd}
+          onClick={onOpen}
         >
           New project
         </Button>
@@ -43,7 +39,7 @@ const FilterBar = memo<FilterBarProps>(
             <FormModal
               modalTitle="Add new project"
               buttonLabel="Add project"
-              onClose={onClose}
+              onClose={handleClose}
               onConfirm={onConfirm}
               isLoading={isLoading}
             />

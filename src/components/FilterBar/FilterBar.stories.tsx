@@ -15,18 +15,7 @@ const meta = {
       description: "The loading for filter",
       control: { type: "boolean" },
     },
-    isOpen: {
-      description: "The action open modal",
-      control: { type: "boolean" },
-    },
-    onClickAdd: {
-      description: "The action click button to add new project",
-      control: { type: "object" },
-    },
-    onClose: {
-      description: "The action close modal",
-      control: { type: "object" },
-    },
+
     onChangeSearch: {
       description: "The action when tying content",
       control: { type: "object" },
@@ -44,9 +33,6 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     isLoading: false,
-    isOpen: false,
-    onClickAdd: () => {},
-    onClose: () => {},
     onChangeSearch: () => {},
     onConfirm: () => {},
   },
@@ -54,9 +40,6 @@ export const Primary: Story = {
 export const Secondary: Story = {
   args: {
     isLoading: false,
-    isOpen: true,
-    onClickAdd: () => {},
-    onClose: () => {},
     onChangeSearch: () => {},
     onConfirm: () => {},
   },

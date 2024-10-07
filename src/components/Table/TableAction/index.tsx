@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback } from "react";
+import { lazy, memo, Suspense, useCallback } from "react";
 import { AxiosError } from "axios";
 import { Flex, useDisclosure, useToast } from "@chakra-ui/react";
 
@@ -22,7 +22,7 @@ interface ActionCellProps {
   project: Project;
 }
 
-const ActionCell = ({ project }: ActionCellProps) => {
+const ActionCell = memo(({ project }: ActionCellProps) => {
   const toast = useToast();
 
   // Disclosure for modals
@@ -139,6 +139,6 @@ const ActionCell = ({ project }: ActionCellProps) => {
       </Suspense>
     </Flex>
   );
-};
+});
 
 export default ActionCell;

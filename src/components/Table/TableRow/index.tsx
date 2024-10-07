@@ -1,5 +1,5 @@
 import { Project } from "@/types";
-import { Td } from "@chakra-ui/react";
+import { Td, Skeleton } from "@chakra-ui/react";
 import { memo, ReactNode } from "react";
 
 // Define the column type for better type safety
@@ -8,21 +8,29 @@ export interface ColumnType {
   title: string;
   customCell?: (project: Project) => ReactNode;
 }
-interface CommonTableRowProps {
+
+interface TableRowProps {
   project: Project;
   columns: ColumnType[];
+  isLoading: boolean; // New prop to indicate loading state
 }
 
-const CommonTableRow = memo<CommonTableRowProps>(({ project, columns }) => {
+const TableRow = memo<TableRowProps>(({ project, columns, isLoading }) => {
   return (
     <>
       {columns.map(({ key, customCell }) => (
         <Td key={key}>
-          {customCell ? customCell(project) : project[key as keyof Project]}
+          {isLoading ? (
+            <Skeleton height="20px" />
+          ) : customCell ? (
+            customCell(project)
+          ) : (
+            project[key as keyof Project]
+          )}
         </Td>
       ))}
     </>
   );
 });
 
-export default CommonTableRow;
+export default TableRow;

@@ -28,6 +28,7 @@ export const Primary: Story = {
   args: {
     project: PROJECT_ITEM,
     columns: HEADER_TABLE,
+    isLoading: false,
   },
   render: (args) => {
     return (

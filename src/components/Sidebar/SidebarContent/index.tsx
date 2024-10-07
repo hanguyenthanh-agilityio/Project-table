@@ -21,9 +21,11 @@ import { Header } from "@/components";
 
 // Images
 import Logo from "@/Logo.svg";
+import { memo } from "react";
 
 interface LinkItemProps {
   icon: IconType;
+  name?: string;
 }
 
 interface MobileProps extends FlexProps {
@@ -39,7 +41,7 @@ const LinkItems: Array<LinkItemProps> = [
   { icon: FiSettings },
 ];
 
-export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+export const SidebarContent = memo(({ onClose, ...rest }: SidebarProps) => {
   return (
     <Box
       transition="3s ease"
@@ -62,6 +64,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       <Flex flexDir="column" justifyContent="center" alignItems="center">
         {LinkItems.map((link) => (
           <Button
+            key={link.name}
             mb="10px"
             h="40px"
             w="40px"
@@ -88,7 +91,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       </Flex>
     </Box>
   );
-};
+});
 
 export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   return (
