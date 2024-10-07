@@ -19,7 +19,6 @@ jest.mock("@chakra-ui/react", () => ({
 }));
 
 jest.mock("@/hooks", () => ({
-  useAddProjectMutation: jest.fn(),
   useDebounce: jest.fn((fn) => fn),
 }));
 
