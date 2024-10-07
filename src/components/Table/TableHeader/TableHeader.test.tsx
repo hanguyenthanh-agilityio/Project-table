@@ -6,18 +6,21 @@ import { Table } from "@chakra-ui/react";
 
 // Constants
 import { HEADER_TABLE } from "@/constants/table";
-import { PROJECT_LIST } from "@/mocks/table";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 describe("Select component", () => {
   it("should render TableHeader snapshot correctly", () => {
+    const queryClient = new QueryClient();
+
     const Header = render(
-      <Table>
-        <TableHeader
-          headerList={HEADER_TABLE}
-          projects={PROJECT_LIST}
-          isLoading={false}
-        />
-      </Table>,
+      <QueryClientProvider client={queryClient}>
+        <Table>
+          <TableHeader
+            headerList={HEADER_TABLE}
+            filters={{ page: 1, limit: 10 }}
+          />
+        </Table>
+      </QueryClientProvider>,
     );
     expect(Header).toMatchSnapshot();
   });
