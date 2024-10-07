@@ -10,10 +10,7 @@ const ConfirmModal = lazy(() => import("@/components/ConfirmModal"));
 const FormModal = lazy(() => import("@/components/FormModal"));
 
 // Hooks
-import {
-  useEditProjectMutation,
-  useDeleteProjectMutation,
-} from "@/hooks/useProject";
+import { useEditProjectMutation, useDeleteProjectMutation } from "@/hooks";
 
 // types
 import { DropdownItemType, Project } from "@/types";

@@ -9,11 +9,10 @@ const Table = lazy(() => import("@/components/Table"));
 import { HEADER_TABLE } from "@/constants";
 
 // Hooks
-import { useAddProjectMutation } from "@/hooks/useProject";
+import { useAddProjectMutation, useDebounce } from "@/hooks";
 
 // Types
 import { Params, Project } from "@/types";
-import { useDebounce } from "@/hooks/useDebounce";
 
 const Home = () => {
   const { onClose } = useDisclosure();

@@ -23,7 +23,7 @@ import { HeaderList, Params } from "@/types";
 
 // Utils
 import { sortByColumn, tableColumns } from "@/utils";
-import { useProjectList } from "@/hooks/useProject";
+import { useProjectList } from "@/hooks";
 
 interface TableProp {
   headerList: HeaderList[];
