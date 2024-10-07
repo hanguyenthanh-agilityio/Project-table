@@ -31,5 +31,6 @@ export const Primary: Story = {
   args: {
     projects: PROJECT_LIST,
     headerList: HEADER_TABLE,
+    isLoading: false,
   },
 };

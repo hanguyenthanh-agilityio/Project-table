@@ -12,7 +12,11 @@ describe("Select component", () => {
   it("should render TableHeader snapshot correctly", () => {
     const Header = render(
       <Table>
-        <TableHeader headerList={HEADER_TABLE} projects={PROJECT_LIST} />
+        <TableHeader
+          headerList={HEADER_TABLE}
+          projects={PROJECT_LIST}
+          isLoading={false}
+        />
       </Table>,
     );
     expect(Header).toMatchSnapshot();

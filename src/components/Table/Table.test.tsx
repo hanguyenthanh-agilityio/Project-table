@@ -11,7 +11,11 @@ import { PROJECT_LIST } from "@/mocks/table";
 describe("Table component", () => {
   it("should render Table snapshot correctly", () => {
     const table = render(
-      <Table headerList={HEADER_TABLE} projects={PROJECT_LIST} />,
+      <Table
+        headerList={HEADER_TABLE}
+        projects={PROJECT_LIST}
+        isLoading={false}
+      />,
     );
     expect(table).toMatchSnapshot();
   });
