@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 
 // Components
@@ -47,8 +47,15 @@ const FormModal = memo<FormModalProps>(
     const endDateString = watch("finishAt");
 
     // Convert the string to Date | null
-    const startDate = startDateString ? dayjs(startDateString).toDate() : null;
-    const endDate = endDateString ? dayjs(endDateString).toDate() : null;
+    const startDate = useMemo(
+      () => (startDateString ? dayjs(startDateString).toDate() : null),
+      [startDateString],
+    );
+
+    const endDate = useMemo(
+      () => (endDateString ? dayjs(endDateString).toDate() : null),
+      [endDateString],
+    );
 
     const onSubmit: SubmitHandler<Project> = (data) => {
       // https://day.js.org/docs/en/query/is-after
@@ -62,16 +69,22 @@ const FormModal = memo<FormModalProps>(
     };
 
     // Handling start date changes
-    const handleChangeStartDate = (date: Date | null) => {
-      clearErrors("createdAt");
-      setValue("createdAt", dayjs(date).toString());
-    };
+    const handleChangeStartDate = useCallback(
+      (date: Date | null) => {
+        clearErrors("createdAt");
+        setValue("createdAt", dayjs(date).toString());
+      },
+      [clearErrors, setValue],
+    );
 
     // Handling end date changes
-    const handleChangeEndDate = (date: Date | null) => {
-      clearErrors("finishAt");
-      setValue("finishAt", dayjs(date).toString());
-    };
+    const handleChangeEndDate = useCallback(
+      (date: Date | null) => {
+        clearErrors("finishAt");
+        setValue("finishAt", dayjs(date).toString());
+      },
+      [clearErrors, setValue],
+    );
 
     return (
       <Modal

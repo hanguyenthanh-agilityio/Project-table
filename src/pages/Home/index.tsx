@@ -1,23 +1,22 @@
-import { Flex, Text, useDisclosure, useToast } from "@chakra-ui/react";
+import { Flex, useDisclosure, useToast } from "@chakra-ui/react";
 import { lazy, Suspense, useCallback, useState } from "react";
 // Components
 import { Sidebar, LoadingIndicator } from "@/components";
 const FilterBar = lazy(() => import("@/components/FilterBar"));
-const Pagination = lazy(() => import("@/components/Pagination"));
 const Table = lazy(() => import("@/components/Table"));
 
 // Constants
 import { HEADER_TABLE } from "@/constants";
 
 // Hooks
-import { useAddProjectMutation, useProjectList } from "@/hooks/useProject";
+import { useAddProjectMutation } from "@/hooks/useProject";
 
 // Types
 import { Params, Project } from "@/types";
 import { useDebounce } from "@/hooks/useDebounce";
 
 const Home = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { onClose } = useDisclosure();
   const toast = useToast();
 
   const initialFilters = {
@@ -26,32 +25,20 @@ const Home = () => {
     limit: 10,
   };
 
-  const [filter, setFilter] = useState<Params>(initialFilters);
-
-  const handleError = useCallback(
-    (error: string) => {
-      toast({
-        title: error,
-        status: "error",
-        isClosable: true,
-      });
-    },
-    [toast],
-  );
-
-  // Get list project
-  const { isLoading, data: projects } = useProjectList(filter, handleError);
+  const [, setFilter] = useState<Params>(initialFilters);
 
   const { mutate: addProject, isLoading: isLoadingAdd } =
     useAddProjectMutation();
 
   // Handle Search project
-  const handleChangeSearch = useCallback(
-    (projectName: string) => {
-      setFilter({ ...filter, projectName });
-    },
-    [filter],
-  );
+  const handleChangeSearch = useCallback((projectName: string) => {
+    setFilter((prev) => {
+      if (prev.projectName !== projectName) {
+        return { ...prev, projectName };
+      }
+      return prev;
+    });
+  }, []);
 
   const optimizeFn = useCallback(useDebounce(handleChangeSearch), []);
 
@@ -76,17 +63,6 @@ const Home = () => {
     [addProject, handleConfirmSuccess],
   );
 
-  // Handle pagination
-  const handleClickNext = useCallback(() => {
-    setFilter({ ...filter, page: Number(filter.page) + 1 });
-  }, [filter]);
-
-  const handleClickPrevious = useCallback(() => {
-    setFilter({ ...filter, page: Number(filter.page) - 1 });
-  }, [filter]);
-
-  const totalPages = Math.ceil(45 / filter.limit);
-
   return (
     <>
       <Sidebar>
@@ -96,37 +72,9 @@ const Home = () => {
               isLoading={isLoadingAdd}
               onChangeSearch={optimizeFn}
               onConfirm={handleConfirm}
-              isOpen={isOpen}
-              onClickAdd={onOpen}
-              onClose={onClose}
             />
           </Suspense>
-
-          {isLoading ? (
-            <LoadingIndicator />
-          ) : projects?.length === 0 ? (
-            <Text>No projects found</Text>
-          ) : (
-            <Suspense fallback={<LoadingIndicator />}>
-              <Table
-                headerList={HEADER_TABLE}
-                projects={projects}
-                isLoading={isLoading}
-              />
-            </Suspense>
-          )}
-          <Suspense fallback={<LoadingIndicator />}>
-            <Pagination
-              projects={projects}
-              disable={filter.page === 1}
-              onClickPrevious={handleClickPrevious}
-              onClickNext={handleClickNext}
-              startIndex={filter.page}
-              totalPages={totalPages}
-              endIndex={filter.limit}
-              totalItem={45}
-            />
-          </Suspense>
+          <Table headerList={HEADER_TABLE} />
         </Flex>
       </Sidebar>
     </>

@@ -1,23 +1,52 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, Suspense, lazy } from "react";
 import { memo } from "react";
 
 // Components
-import { TableHeader, TableBody } from "@/components";
-import { Table as TableChakra, TableContainer } from "@chakra-ui/react";
+import { TableHeader, TableBody, LoadingIndicator } from "@/components";
+import {
+  Table as TableChakra,
+  TableContainer,
+  useToast,
+  Text,
+} from "@chakra-ui/react";
+const Pagination = lazy(() => import("@/components/Pagination"));
 
 // Types
-import { HeaderList, Project } from "@/types";
+import { HeaderList, Params } from "@/types";
 
 // Utils
 import { sortByColumn, tableColumns } from "@/utils";
+import { useProjectList } from "@/hooks/useProject";
 
 interface TableProp {
   headerList: HeaderList[];
-  projects: Project[];
-  isLoading: boolean;
 }
 
-const Table = memo<TableProp>(({ headerList, projects, isLoading }) => {
+const Table = memo<TableProp>(({ headerList }) => {
+  const toast = useToast();
+
+  const initialFilters = {
+    projectName: "",
+    page: 1,
+    limit: 10,
+  };
+
+  const [filter, setFilter] = useState<Params>(initialFilters);
+
+  const handleError = useCallback(
+    (error: string) => {
+      toast({
+        title: error,
+        status: "error",
+        isClosable: true,
+      });
+    },
+    [toast],
+  );
+
+  // Get list project
+  const { isLoading, data: projects } = useProjectList(filter, handleError);
+
   // Get columns from utils
   const columns = tableColumns();
 
@@ -39,22 +68,48 @@ const Table = memo<TableProp>(({ headerList, projects, isLoading }) => {
     [sortColumn, sortDirection],
   );
 
+  // Handle pagination
+  const handleClickNext = useCallback(() => {
+    setFilter((prev) => ({ ...prev, page: prev.page + 1 }));
+  }, []);
+
+  const handleClickPrevious = useCallback(() => {
+    setFilter((prev) => ({ ...prev, page: Math.max(prev.page - 1, 1) }));
+  }, []);
+
   return (
-    <TableContainer>
-      <TableChakra>
-        <TableHeader
-          headerList={headerList}
-          onSort={handleSort}
-          sortColumn={sortColumn}
-          sortDirection={sortDirection}
+    <>
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : projects?.length === 0 ? (
+        <Text>No projects found</Text>
+      ) : (
+        <TableContainer>
+          <TableChakra>
+            <TableHeader
+              headerList={headerList}
+              onSort={handleSort}
+              sortColumn={sortColumn}
+              sortDirection={sortDirection}
+            />
+            <TableBody
+              projects={sortedProjects}
+              columns={columns}
+              isLoading={isLoading}
+            />
+          </TableChakra>
+        </TableContainer>
+      )}
+      {/* Pagination */}
+      <Suspense fallback={<LoadingIndicator />}>
+        <Pagination
+          projects={projects}
+          disable={filter.page === 1}
+          onClickPrevious={handleClickPrevious}
+          onClickNext={handleClickNext}
         />
-        <TableBody
-          projects={sortedProjects}
-          columns={columns}
-          isLoading={isLoading}
-        />
-      </TableChakra>
-    </TableContainer>
+      </Suspense>
+    </>
   );
 });
 
