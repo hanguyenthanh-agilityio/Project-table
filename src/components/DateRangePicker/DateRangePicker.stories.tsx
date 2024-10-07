@@ -61,13 +61,11 @@ export const DateRange: Story = {
           label="From"
           selected={startDate}
           onChange={(date) => setStartDate(date)}
-          endDate={endDate}
         />
         <DateRangePicker
           label="To"
           selected={endDate}
           onChange={(date) => setEndDate(date)}
-          startDate={startDate}
         />
       </>
     );

@@ -20,7 +20,7 @@ import { IconType } from "react-icons";
 import { Header } from "@/components";
 
 // Images
-import Logo from "../../../../public/Logo.svg";
+import Logo from "@/Logo.svg";
 
 interface LinkItemProps {
   icon: IconType;
