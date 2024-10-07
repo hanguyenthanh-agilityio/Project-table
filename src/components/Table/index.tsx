@@ -1,4 +1,12 @@
-import { useState, useCallback, Suspense, lazy, useMemo, memo } from "react";
+import {
+  useState,
+  useCallback,
+  Suspense,
+  lazy,
+  useMemo,
+  memo,
+  useEffect,
+} from "react";
 
 // Components
 import { TableHeader, TableBody, LoadingIndicator } from "@/components";
@@ -19,18 +27,13 @@ import { useProjectList } from "@/hooks/useProject";
 
 interface TableProp {
   headerList: HeaderList[];
+  filters: Params;
 }
 
-const Table = memo(({ headerList }: TableProp) => {
+const Table = memo(({ headerList, filters }: TableProp) => {
   const toast = useToast();
 
-  const initialFilters = {
-    projectName: "",
-    page: 1,
-    limit: 10,
-  };
-
-  const [filter, setFilter] = useState<Params>(initialFilters);
+  const [filter, setFilter] = useState<Params>({ ...filters });
 
   const handleError = useCallback(
     (error: string) => {
@@ -77,6 +80,10 @@ const Table = memo(({ headerList }: TableProp) => {
   const handleClickPrevious = useCallback(() => {
     setFilter((prev) => ({ ...prev, page: Math.max(prev.page - 1, 1) }));
   }, []);
+
+  useEffect(() => {
+    setFilter((prev) => ({ ...prev, ...filters }));
+  }, [filters]);
 
   return (
     <>

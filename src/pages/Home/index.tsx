@@ -71,7 +71,7 @@ const Home = () => {
               onChangeSearch={optimizeFn}
               onConfirm={handleConfirm}
             />
-            <Table headerList={HEADER_TABLE} />
+            <Table headerList={HEADER_TABLE} filters={filter} />
           </Suspense>
         </Flex>
       </Sidebar>
