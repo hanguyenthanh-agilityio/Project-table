@@ -14,9 +14,10 @@ import { sortByColumn, tableColumns } from "@/utils";
 interface TableProp {
   headerList: HeaderList[];
   projects: Project[];
+  isLoading: boolean;
 }
 
-const Table = memo<TableProp>(({ headerList, projects }) => {
+const Table = memo<TableProp>(({ headerList, projects, isLoading }) => {
   // Get columns from utils
   const columns = tableColumns();
 
@@ -47,7 +48,11 @@ const Table = memo<TableProp>(({ headerList, projects }) => {
           sortColumn={sortColumn}
           sortDirection={sortDirection}
         />
-        <TableBody projects={sortedProjects} columns={columns} />
+        <TableBody
+          projects={sortedProjects}
+          columns={columns}
+          isLoading={isLoading}
+        />
       </TableChakra>
     </TableContainer>
   );

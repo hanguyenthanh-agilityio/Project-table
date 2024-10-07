@@ -11,16 +11,21 @@ import { ColumnType } from "../TableRow";
 interface TableBodyProps {
   projects: Project[];
   columns: ColumnType[];
+  isLoading: boolean;
 }
 
 const TableBody = memo<TableBodyProps>(
-  ({ projects, columns }: TableBodyProps) => {
+  ({ projects, columns, isLoading }: TableBodyProps) => {
     return (
       <Tbody>
         {projects.length ? (
           projects.map((project) => (
             <Tr key={project.id}>
-              <TableRow project={project} columns={columns} />
+              <TableRow
+                project={project}
+                columns={columns}
+                isLoading={isLoading}
+              />
             </Tr>
           ))
         ) : (

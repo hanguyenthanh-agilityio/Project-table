@@ -108,7 +108,11 @@ const Home = () => {
             <Text>No projects found</Text>
           ) : (
             <Suspense fallback={<LoadingIndicator />}>
-              <Table headerList={HEADER_TABLE} projects={projects} />
+              <Table
+                headerList={HEADER_TABLE}
+                projects={projects}
+                isLoading={isLoading}
+              />
             </Suspense>
           )}
           <Suspense fallback={<LoadingIndicator />}>
