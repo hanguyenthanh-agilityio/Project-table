@@ -4,45 +4,33 @@ import { memo } from "react";
 
 // CSS
 import "./date-picker.css";
-import { FormErrorMessage, Text } from "@chakra-ui/react";
-
+import { FormControl, FormErrorMessage, FormLabel } from "@chakra-ui/react";
 interface DateProps {
   label: string;
   selected: Date | null;
   minDate?: Date | null;
-  endDate?: Date | null;
-  startDate?: Date | null;
   onChange: (date: Date | null) => void;
   errorMessage?: string;
 }
 
 const DateRangePicker = memo<DateProps>(
-  ({
-    label,
-    selected,
-    minDate,
-    endDate,
-    startDate,
-    onChange,
-    errorMessage,
-    ...props
-  }: DateProps) => (
-    <>
-      <Text pb="5px">{label}</Text>
-      <DatePicker
-        className="date-picker"
-        selected={selected}
-        onChange={onChange}
-        dateFormat="dd/MM/YYY"
-        minDate={minDate || undefined}
-        endDate={endDate || undefined}
-        startDate={startDate || undefined}
-        selectsStart
-        {...props}
-      />
-      {errorMessage && <FormErrorMessage>{errorMessage}</FormErrorMessage>}
-    </>
-  ),
+  ({ label, selected, onChange, minDate, errorMessage }) => {
+    return (
+      <FormControl isInvalid={!!errorMessage}>
+        <FormLabel>{label}</FormLabel>
+        <DatePicker
+          className="date-picker"
+          selected={selected}
+          onChange={onChange}
+          dateFormat="dd/MM/YYY"
+          minDate={minDate || undefined}
+          placeholderText="Select date"
+          isClearable
+        />
+        {errorMessage && <FormErrorMessage>{errorMessage}</FormErrorMessage>}
+      </FormControl>
+    );
+  },
 );
 
 export default DateRangePicker;

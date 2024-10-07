@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 
 // Components
@@ -8,13 +8,13 @@ import { Flex, FormControl, FormLabel, SimpleGrid } from "@chakra-ui/react";
 // Types
 import { Project } from "@/types";
 import { SELECT_STATUS } from "@/constants";
+import dayjs from "dayjs";
 
 interface FormModalProps {
   modalTitle: string;
   buttonLabel: string;
   isLoading?: boolean;
   projectItem?: Project;
-
   onClose: () => void;
   onConfirm: (data: Project) => void;
 }
@@ -28,45 +28,49 @@ const FormModal = memo<FormModalProps>(
     onClose,
     onConfirm,
   }: FormModalProps) => {
+    // https://react-hook-form.com/docs/useform
     const {
       register,
       formState: { errors },
       handleSubmit,
       control,
-      watch,
-      setError,
-      clearErrors,
+      watch, // Render input value and for determining what to render by condition
+      setError, // Used to set error for element
+      clearErrors, // Delete errors based on name
+      setValue, // Set value for element
     } = useForm<Project>({
       defaultValues: projectItem,
     });
 
-    // Watch the start and end dates
-    const createdAt = watch("createdAt");
-    const finishAt = watch("finishAt");
+    // Watch the start date and end date
+    const startDateString = watch("createdAt");
+    const endDateString = watch("finishAt");
 
-    // Handler for form submission
+    // Convert the string to Date | null
+    const startDate = startDateString ? dayjs(startDateString).toDate() : null;
+    const endDate = endDateString ? dayjs(endDateString).toDate() : null;
+
     const onSubmit: SubmitHandler<Project> = (data) => {
-      // Validate if start date is greater than end date
-      if (createdAt && finishAt && new Date(createdAt) > new Date(finishAt)) {
+      // https://day.js.org/docs/en/query/is-after
+      if (dayjs(startDate).isAfter(dayjs(endDate))) {
         setError("finishAt", {
-          type: "manual",
-          message: "End date must be greater than start date.",
+          message: "Finish date must be greater than start date.",
         });
-        return; // Prevent form submission
+        return;
       }
-      onConfirm(data); // Call the onConfirm callback if validation passes
+      onConfirm(data);
     };
-    const [startDate, setStartDate] = useState<Date | null>(null);
-    const [endDate, setEndDate] = useState<Date | null>(null);
 
+    // Handling start date changes
     const handleChangeStartDate = (date: Date | null) => {
-      setStartDate(date);
-      clearErrors("createdAt"); // Clear any previous errors
+      clearErrors("createdAt");
+      setValue("createdAt", dayjs(date).toString());
     };
 
+    // Handling end date changes
     const handleChangeEndDate = (date: Date | null) => {
-      setEndDate(date);
-      clearErrors("finishAt"); // Clear any previous errors
+      clearErrors("finishAt");
+      setValue("finishAt", dayjs(date).toString());
     };
 
     return (
@@ -120,44 +124,38 @@ const FormModal = memo<FormModalProps>(
             />
             {/* Project timeline */}
             <FormLabel fontSize="16px">Project timeline</FormLabel>
-            <Flex
-              gap="3"
-              pb="15px"
-              fontSize="14px"
-              justifyContent="space-between"
-            >
-              {/* Start date */}
-              <Flex flexDir="column" alignItems="start">
+            <Flex justifyContent="space-between" pb="15px" fontSize="14px">
+              <Flex gap="3" justifyContent="space-between">
+                {/* Start date */}
                 <Controller
                   name="createdAt"
                   control={control}
-                  render={(props) => (
+                  render={() => (
                     <DateRangePicker
                       label="From"
                       selected={startDate}
-                      startDate={startDate}
-                      endDate={endDate}
                       onChange={handleChangeStartDate}
-                      {...props}
+                      errorMessage={
+                        errors.createdAt ? errors.createdAt?.message : undefined
+                      }
                     />
                   )}
                 />
               </Flex>
-
               {/* End date */}
               <Flex flexDir="column" alignItems="start">
                 <Controller
                   name="finishAt"
                   control={control}
-                  render={(props) => (
+                  render={() => (
                     <DateRangePicker
                       label="To"
                       selected={endDate}
-                      startDate={startDate}
-                      endDate={endDate}
-                      minDate={startDate}
                       onChange={handleChangeEndDate}
-                      {...props}
+                      minDate={startDate || undefined}
+                      errorMessage={
+                        errors.finishAt ? errors.finishAt.message : undefined
+                      }
                     />
                   )}
                 />
