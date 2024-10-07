@@ -1,0 +1,15 @@
+.table-header-projectName {
+    max-width: 400px !important;
+}
+
+.table-header-pm {
+    width: 100px !important;
+    text-align: center !important;
+}
+
+.table-header-id,
+.table-header-pm,
+.table-header-resource,
+.table-header-estimation {
+    text-align: center !important;
+}

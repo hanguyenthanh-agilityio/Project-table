@@ -1,6 +1,7 @@
 import { Project } from "@/types";
 import { Td, Skeleton } from "@chakra-ui/react";
 import { memo, ReactNode } from "react";
+import "./tableRow.css";
 
 // Define the column type for better type safety
 export interface ColumnType {
@@ -19,7 +20,7 @@ const TableRow = memo<TableRowProps>(({ project, columns, isLoading }) => {
   return (
     <>
       {columns.map(({ key, customCell }) => (
-        <Td key={key}>
+        <Td key={key} className={`table-row-${key}`}>
           {isLoading ? (
             <Skeleton height="20px" />
           ) : customCell ? (

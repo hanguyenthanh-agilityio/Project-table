@@ -1,6 +1,7 @@
 import { Th, Thead, Tr } from "@chakra-ui/react";
 import { HeaderList } from "@/types";
 import { memo } from "react";
+import "./tableHeader.css";
 
 interface TableHeaderProps {
   headerList: HeaderList[];
@@ -15,9 +16,10 @@ const TableHeader = memo<TableHeaderProps>(
     return (
       <Thead>
         <Tr>
-          {headerList.map(({ title, key }, index) => (
+          {headerList.map(({ title, key }) => (
             <Th
-              key={`title-${index}`}
+              key={`title-${key}`}
+              className={`table-header-${key}`}
               cursor="pointer"
               onClick={() => handleClick(key)}
             >
