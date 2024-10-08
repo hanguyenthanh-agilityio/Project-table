@@ -7,7 +7,16 @@ import { Flex, FormControl, FormLabel, SimpleGrid } from "@chakra-ui/react";
 
 // Types
 import { Project } from "@/types";
-import { SELECT_STATUS } from "@/constants";
+
+// Constants
+import {
+  CREATED_AT,
+  DATE_MESSAGES,
+  FINISH_AT,
+  SELECT_STATUS,
+} from "@/constants";
+
+// Lib
 import dayjs from "dayjs";
 
 interface FormModalProps {
@@ -43,8 +52,8 @@ const FormModal = memo<FormModalProps>(
     });
 
     // Watch the start date and end date
-    const startDateString = watch("createdAt");
-    const endDateString = watch("finishAt");
+    const startDateString = watch(CREATED_AT);
+    const endDateString = watch(FINISH_AT);
 
     // Convert the string to Date | null
     const startDate = useMemo(
@@ -60,8 +69,8 @@ const FormModal = memo<FormModalProps>(
     const onSubmit: SubmitHandler<Project> = (data) => {
       // https://day.js.org/docs/en/query/is-after
       if (dayjs(startDate).isAfter(dayjs(endDate))) {
-        setError("finishAt", {
-          message: "Finish date must be greater than start date.",
+        setError(FINISH_AT, {
+          message: DATE_MESSAGES,
         });
         return;
       }
@@ -71,8 +80,8 @@ const FormModal = memo<FormModalProps>(
     // Handling start date changes
     const handleChangeStartDate = useCallback(
       (date: Date | null) => {
-        clearErrors("createdAt");
-        setValue("createdAt", dayjs(date).toString());
+        clearErrors(CREATED_AT);
+        setValue(CREATED_AT, dayjs(date).toString());
       },
       [clearErrors, setValue],
     );
@@ -80,8 +89,8 @@ const FormModal = memo<FormModalProps>(
     // Handling end date changes
     const handleChangeEndDate = useCallback(
       (date: Date | null) => {
-        clearErrors("finishAt");
-        setValue("finishAt", dayjs(date).toString());
+        clearErrors(FINISH_AT);
+        setValue(FINISH_AT, dayjs(date).toString());
       },
       [clearErrors, setValue],
     );

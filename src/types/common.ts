@@ -12,3 +12,5 @@ export type DropdownItemType = {
   name: string;
   action?: () => void;
 };
+
+export type SortOption = "asc" | "desc";

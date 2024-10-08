@@ -2,6 +2,9 @@ import React from "react";
 import { Preview } from "@storybook/react";
 import { ChakraProvider, theme } from "@chakra-ui/react";
 import CHAKRA_THEME_DEFAULT from "../src/themes/chakra.ts";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const preview: Preview = {
   parameters: {
@@ -18,9 +21,11 @@ const preview: Preview = {
 
   decorators: [
     (Story) => (
-      <ChakraProvider theme={CHAKRA_THEME_DEFAULT}>
-        <Story />
-      </ChakraProvider>
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider theme={CHAKRA_THEME_DEFAULT}>
+          <Story />
+        </ChakraProvider>
+      </QueryClientProvider>
     ),
   ],
 };

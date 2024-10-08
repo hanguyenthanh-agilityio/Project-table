@@ -10,3 +10,6 @@ export const HEADER_TABLE: HeaderList[] = [
   { title: "Project timeline", key: "projectTimeline" },
   { title: "Estimation", key: "estimation" },
 ];
+
+export const CREATED_AT = "createdAt";
+export const FINISH_AT = "finishAt";

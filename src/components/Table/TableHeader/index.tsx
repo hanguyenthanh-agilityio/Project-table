@@ -1,5 +1,5 @@
 import { Th, Thead, Tr } from "@chakra-ui/react";
-import { HeaderList } from "@/types";
+import { HeaderList, SortOption } from "@/types";
 import { memo } from "react";
 import "./tableHeader.css";
 
@@ -7,7 +7,7 @@ interface TableHeaderProps {
   headerList: HeaderList[];
   onSort: (column: string) => void;
   sortColumn: string | null;
-  sortDirection: "asc" | "desc";
+  sortDirection: SortOption;
 }
 
 const TableHeader = memo<TableHeaderProps>(

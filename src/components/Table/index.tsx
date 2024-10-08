@@ -19,7 +19,7 @@ import {
 const Pagination = lazy(() => import("@/components/Pagination"));
 
 // Types
-import { HeaderList, Params } from "@/types";
+import { HeaderList, Params, SortOption } from "@/types";
 
 // Utils
 import { sortByColumn, tableColumns } from "@/utils";
@@ -51,9 +51,10 @@ const Table = memo(({ headerList, filters }: TableProp) => {
 
   // Get columns from utils
   const columns = tableColumns();
-
+  const ASC = "asc";
+  const DESC = "desc";
   const [sortColumn, setSortColumn] = useState<string | null>(null);
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [sortDirection, setSortDirection] = useState<SortOption>(ASC);
 
   // Handle sort by column
   const sortedProjects = useMemo(
@@ -63,10 +64,10 @@ const Table = memo(({ headerList, filters }: TableProp) => {
   const handleSort = useCallback(
     (column: string) => {
       if (sortColumn === column) {
-        setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+        setSortDirection(sortDirection === ASC ? DESC : ASC);
       } else {
         setSortColumn(column);
-        setSortDirection("asc");
+        setSortDirection(ASC);
       }
     },
     [sortColumn, sortDirection],
