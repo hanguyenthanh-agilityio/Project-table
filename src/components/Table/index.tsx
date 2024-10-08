@@ -15,6 +15,10 @@ import {
   TableContainer,
   useToast,
   Text,
+  Skeleton,
+  Tbody,
+  Tr,
+  Td,
 } from "@chakra-ui/react";
 const Pagination = lazy(() => import("@/components/Pagination"));
 
@@ -61,6 +65,7 @@ const Table = memo(({ headerList, filters }: TableProp) => {
     () => sortByColumn(projects, sortColumn, sortDirection),
     [projects, sortColumn, sortDirection],
   );
+
   const handleSort = useCallback(
     (column: string) => {
       if (sortColumn === column) {
@@ -89,9 +94,23 @@ const Table = memo(({ headerList, filters }: TableProp) => {
   return (
     <>
       {isLoading ? (
-        <LoadingIndicator />
+        <TableContainer>
+          <TableChakra>
+            <Tbody>
+              {[...Array(5)].map((_, index) => (
+                <Tr key={index}>
+                  {columns.map((_col, colIndex) => (
+                    <Td key={colIndex}>
+                      <Skeleton height="20px" />
+                    </Td>
+                  ))}
+                </Tr>
+              ))}
+            </Tbody>
+          </TableChakra>
+        </TableContainer>
       ) : projects?.length === 0 ? (
-        <Text>No projects found</Text>
+        <Text>No projects found.</Text>
       ) : (
         <TableContainer>
           <TableChakra>
